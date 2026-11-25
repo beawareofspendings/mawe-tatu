@@ -327,12 +327,12 @@
             transition: transform 0.16s ease, box-shadow 0.2s ease, filter 0.2s ease;
         }
 
-        .mode-btn:active:not(:disabled) {
+        .mode-btn:active {
             transform: scale(0.97);
         }
 
         .mode-btn:disabled {
-            opacity: 0.5;
+            opacity: 0.55;
             cursor: not-allowed;
         }
 
@@ -370,10 +370,8 @@
         /* Auth Card & Segmented Toggle */
         .auth-card {
             width: 100%;
-            max-width: 375px;
-            max-height: 92dvh;
-            overflow-y: auto;
-            padding: 24px 22px 20px 22px;
+            max-width: 350px;
+            padding: 26px 22px 22px 22px;
             border-radius: 26px;
             background: radial-gradient(circle at 35% 20%, #522D1D 0%, #341A0F 75%, #26120A 100%);
             box-shadow:
@@ -385,7 +383,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            gap: 13px;
         }
 
         .auth-toggle-track {
@@ -481,69 +479,6 @@
             color: rgba(254, 243, 199, 0.42);
         }
 
-        /* Two-Tier Plan Selector Cards (100 KSH With Code vs 150 KSH Without Code) */
-        .tier-plans-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 8px;
-            width: 100%;
-        }
-
-        .tier-plan-card {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 6px;
-            padding: 11px 11px;
-            border-radius: 15px;
-            background: rgba(18, 8, 4, 0.88);
-            border: 1.5px solid rgba(245, 158, 11, 0.3);
-            text-align: left;
-            cursor: pointer;
-            transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
-        }
-
-        .tier-plan-card:active {
-            transform: scale(0.97);
-        }
-
-        .tier-plan-card.selected-plan {
-            border-color: #34D399;
-            background: rgba(16, 185, 129, 0.16);
-            box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.22);
-        }
-
-        .tier-plan-card.selected-plan-amber {
-            border-color: #F59E0B;
-            background: rgba(245, 158, 11, 0.16);
-            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.22);
-        }
-
-        .tier-price-tag {
-            font-size: 1.05rem;
-            font-weight: 900;
-            color: #6EE7B7;
-        }
-
-        .tier-plan-card.selected-plan-amber .tier-price-tag {
-            color: #FDE047;
-        }
-
-        .tier-plan-title {
-            font-size: 11.5px;
-            font-weight: 800;
-            color: #FEF3C7;
-            line-height: 1.25;
-        }
-
-        .tier-plan-sub {
-            font-size: 10.5px;
-            font-weight: 600;
-            color: rgba(254, 243, 199, 0.68);
-            line-height: 1.3;
-        }
-
         .error-text {
             color: #FCA5A5;
             font-size: 12.5px;
@@ -600,187 +535,58 @@
             gap: 12px;
         }
 
-        /* Full-Screen Invite & Earn Pop-Up with Small Margin Around */
-        #invites-modal {
-            padding: 16px;
-        }
-
-        .modal-box.invites-fullscreen-box {
-            width: 100%;
-            height: 100%;
-            max-width: none;
-            max-height: none;
-            border-radius: 26px;
-            padding: 22px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            gap: 14px;
-            border: 2px solid #A1622F;
-            box-shadow: 0 24px 54px rgba(15, 6, 2, 0.72);
-        }
-
-        .invites-fullscreen-content {
-            width: 100%;
-            max-width: 560px;
-            margin: 0 auto;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            overflow-y: auto;
-            padding-right: 2px;
-        }
-
-        .invites-fullscreen-content::-webkit-scrollbar {
-            width: 5px;
-        }
-        .invites-fullscreen-content::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.25);
-            border-radius: 10px;
-        }
-        .invites-fullscreen-content::-webkit-scrollbar-thumb {
-            background: rgba(52, 211, 153, 0.45);
-            border-radius: 10px;
-        }
-
         /* Invites & Referral Page/Modal Styles */
         .invite-code-card {
             width: 100%;
-            padding: 16px 16px 14px 16px;
+            padding: 14px 14px 12px 14px;
             border-radius: 18px;
-            background: rgba(18, 8, 4, 0.88);
+            background: rgba(18, 8, 4, 0.85);
             border: 1.5px solid rgba(245, 158, 11, 0.35);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
-        }
-
-        .invite-code-pill-wrapper {
-            position: relative;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            gap: 8px;
         }
 
         .invite-code-pill {
             width: 100%;
-            font-size: 2rem;
+            font-size: 1.85rem;
             font-weight: 900;
-            letter-spacing: 0.22em;
-            padding: 12px 14px;
+            letter-spacing: 0.2em;
+            padding: 10px 14px;
             border-radius: 14px;
             background: rgba(34, 16, 8, 0.95);
             border: 2px dashed #34D399;
             color: #6EE7B7;
             user-select: all;
-            transition: filter 0.25s ease, border-color 0.25s ease;
-        }
-
-        .invite-code-pill.code-locked {
-            border-color: rgba(248, 113, 113, 0.55);
-            color: rgba(254, 202, 202, 0.5);
-            filter: blur(5px);
-            user-select: none;
-            pointer-events: none;
-        }
-
-        .code-lock-overlay-badge {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background: rgba(20, 9, 4, 0.72);
-            border-radius: 14px;
-            border: 1.5px solid rgba(248, 113, 113, 0.55);
-            color: #FCA5A5;
-            font-size: 0.95rem;
-            font-weight: 900;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.65);
         }
 
         .invite-share-row {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             width: 100%;
         }
 
         .invite-share-row button {
             flex: 1;
-            padding: 12px 14px;
+            padding: 11px 12px;
             border-radius: 12px;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             font-weight: 800;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            transition: transform 0.15s ease, filter 0.15s ease, opacity 0.2s ease;
+            transition: transform 0.15s ease, filter 0.15s ease;
         }
 
-        .invite-share-row button:active:not(:disabled) {
+        .invite-share-row button:active {
             transform: scale(0.96);
-        }
-
-        .invite-share-row button:disabled {
-            opacity: 0.42;
-            cursor: not-allowed;
-        }
-
-        /* Unlock / Upgrade Banner inside Fullscreen Invite & Earn */
-        .unlock-earning-banner {
-            width: 100%;
-            padding: 15px 14px;
-            border-radius: 18px;
-            background: linear-gradient(145deg, rgba(38, 18, 8, 0.96) 0%, rgba(22, 10, 4, 0.98) 100%);
-            border: 1.5px solid rgba(251, 191, 36, 0.48);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            text-align: left;
-        }
-
-        .unlock-banner-title {
-            font-size: 0.98rem;
-            font-weight: 900;
-            color: #FDE047;
-            display: flex;
-            align-items: center;
-            gap: 7px;
-        }
-
-        .unlock-banner-desc {
-            font-size: 0.84rem;
-            font-weight: 600;
-            color: rgba(254, 243, 199, 0.85);
-            line-height: 1.4;
-        }
-
-        .unlock-plan-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            width: 100%;
-        }
-
-        .unlock-plan-buttons button {
-            width: 100%;
-            max-width: 100%;
-            padding: 13px 16px;
-            font-size: 0.95rem;
         }
 
         .invites-list-section {
             width: 100%;
-            flex: 1;
-            min-height: 140px;
             display: flex;
             flex-direction: column;
             gap: 8px;
@@ -801,11 +607,11 @@
 
         .invites-list-box {
             width: 100%;
-            flex: 1;
+            max-height: 175px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 7px;
             padding-right: 2px;
         }
 
@@ -825,8 +631,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 11px 14px;
-            border-radius: 14px;
+            padding: 9px 12px;
+            border-radius: 13px;
             background: rgba(20, 9, 4, 0.85);
             border: 1px solid rgba(245, 158, 11, 0.26);
         }
@@ -834,16 +640,16 @@
         .invited-friend-info {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 9px;
         }
 
         .invited-avatar {
-            width: 34px;
-            height: 34px;
+            width: 32px;
+            height: 32px;
             border-radius: 9999px;
             background: linear-gradient(135deg, #F59E0B 0%, #B45309 100%);
             color: #1F0E06;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 900;
             display: flex;
             align-items: center;
@@ -854,40 +660,63 @@
         .invited-friend-meta {
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 1px;
         }
 
         .invited-friend-name {
-            font-size: 13.5px;
+            font-size: 13px;
             font-weight: 800;
             color: #FEF3C7;
         }
 
         .invited-friend-date {
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 600;
             color: rgba(254, 243, 199, 0.58);
         }
 
         .invited-bonus-tag {
-            padding: 5px 10px;
+            padding: 4px 9px;
             border-radius: 9999px;
             background: rgba(16, 185, 129, 0.18);
             border: 1px solid rgba(52, 211, 153, 0.42);
             color: #6EE7B7;
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 900;
         }
 
         .invites-empty-state {
-            padding: 24px 14px;
+            padding: 18px 12px;
             border-radius: 14px;
             background: rgba(18, 8, 4, 0.65);
             border: 1px dashed rgba(245, 158, 11, 0.28);
             text-align: center;
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 700;
             color: rgba(254, 243, 199, 0.65);
+        }
+
+        .redeem-invite-row {
+            width: 100%;
+            display: flex;
+            gap: 8px;
+            margin-top: 2px;
+        }
+
+        .redeem-invite-row .clean-input {
+            padding: 9px 10px;
+            font-size: 0.92rem;
+            letter-spacing: 0.1em;
+        }
+
+        .redeem-invite-row button {
+            padding: 9px 14px;
+            border-radius: 12px;
+            border: 1.5px solid rgba(253, 230, 138, 0.3);
+            font-size: 0.85rem;
+            font-weight: 800;
+            cursor: pointer;
+            white-space: nowrap;
         }
 
         /* Opponent Left Room Pop-up Styling */
@@ -1640,7 +1469,7 @@
         </span>
     </div>
 
-    <!-- Balance Pill with + Button on Home top-right (Clickable to open Fullscreen Invites Page) -->
+    <!-- Balance Pill with + Button on Home top-right (Clickable to open Invites Page) -->
     <button id="balance-badge" class="hidden" type="button" aria-label="Balance and Invites" title="View Invites & Referral Code">
         <span class="balance-amount-wrap">
             <span id="home-balance-text">0 KSH</span>
@@ -1701,31 +1530,6 @@
                 <label class="input-label" for="auth-pin">Password (4 digits)</label>
                 <input id="auth-pin" class="clean-input" type="password" inputmode="numeric" maxlength="4" placeholder="1234" autocomplete="off" />
             </div>
-
-            <!-- Register Plan & Optional Friend Invite Code -->
-            <div id="register-extra-fields" class="hidden" style="width:100%; display:flex; flex-direction:column; gap:10px;">
-                <div class="input-group">
-                    <label class="input-label">Choose Registration Plan</label>
-                    <div class="tier-plans-grid">
-                        <button id="plan-card-100" type="button" class="tier-plan-card selected-plan">
-                            <span class="tier-price-tag">100 KSH</span>
-                            <span class="tier-plan-title">Game + Earning Code</span>
-                            <span class="tier-plan-sub">Unlock your code &amp; earn +30 KSH per referral</span>
-                        </button>
-                        <button id="plan-card-150" type="button" class="tier-plan-card">
-                            <span class="tier-price-tag">150 KSH</span>
-                            <span class="tier-plan-title">Game Only (No Code)</span>
-                            <span class="tier-plan-sub">Full game access without earning invite code</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div id="register-invite-group" class="input-group">
-                    <label class="input-label" for="auth-invite-code">Friend's Invite Code (Optional)</label>
-                    <input id="auth-invite-code" class="clean-input" type="text" maxlength="8" placeholder="e.g  BEAST29" autocomplete="off" />
-                </div>
-            </div>
-
             <div id="auth-error" class="error-text"></div>
             <button id="auth-submit-btn" class="mode-btn btn-practice" type="button">Log In</button>
         </div>
@@ -1744,9 +1548,9 @@
         </button>
     </div>
 
-    <!-- Full-Screen Invite & Earn Pop-Up (Fills Screen with Small Space Around, No Redeem Section) -->
+    <!-- Invites & Referral Page / Modal -->
     <div id="invites-modal" class="modal-backdrop hidden">
-        <div class="modal-box invites-fullscreen-box">
+        <div class="modal-box">
             <div class="shop-header-row">
                 <h2 class="modal-title">Invite &amp; Earn</h2>
                 <div class="shop-header-right">
@@ -1760,78 +1564,50 @@
                 </div>
             </div>
 
-            <div class="invites-fullscreen-content">
-                <p id="invites-subtitle-desc" class="modal-desc">
-                    Earn <strong>+30 KSH</strong> commission for every friend who registers and pays successfully using your code!
-                </p>
+            <p class="modal-desc">Share your personal invite code with friends. Earn <strong>+10 KSH</strong> for every friend who joins!</p>
 
-                <!-- Personal Invite Code Card (Locked until user pays the 100 KSH Earning Plan) -->
-                <div class="invite-code-card">
-                    <span class="input-label" style="text-align:center; padding-left:0;">Your Invite Code</span>
-
-                    <div class="invite-code-pill-wrapper">
-                        <div id="personal-invite-code-text" class="invite-code-pill code-locked">------</div>
-                        <div id="invite-code-lock-badge" class="code-lock-overlay-badge">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                            </svg>
-                            <span>CODE LOCKED</span>
-                        </div>
-                    </div>
-
-                    <div class="invite-share-row">
-                        <button id="btn-copy-invite-code" class="btn-secondary" type="button" disabled>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                            </svg>
-                            <span id="copy-invite-label">Copy</span>
-                        </button>
-                        <button id="btn-share-invite-code" class="btn-practice" type="button" disabled>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="18" cy="5" r="3"></circle>
-                                <circle cx="6" cy="12" r="3"></circle>
-                                <circle cx="18" cy="19" r="3"></circle>
-                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                            </svg>
-                            <span>Share</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Unlock Options Banner (Shown when code is locked / unpaid) -->
-                <div id="unlock-earning-banner" class="unlock-earning-banner">
-                    <div class="unlock-banner-title">
-                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            <!-- Personal Invite Code Card + Copy & Share Buttons -->
+            <div class="invite-code-card">
+                <span class="input-label" style="text-align:center; padding-left:0;">Your Invite Code</span>
+                <div id="personal-invite-code-text" class="invite-code-pill">------</div>
+                <div class="invite-share-row">
+                    <button id="btn-copy-invite-code" class="btn-secondary" type="button">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                         </svg>
-                        <span id="unlock-banner-heading">Activate Your Account</span>
-                    </div>
-                    <div id="unlock-banner-copy" class="unlock-banner-desc">
-                        Choose <strong>100 KSH</strong> to get the game + unlock your personal invite code and earn <strong>+30 KSH</strong> per successful referral, or <strong>150 KSH</strong> for game access only (no invite code).
-                    </div>
-                    <div class="unlock-plan-buttons">
-                        <button id="btn-pay-unlock-100" class="mode-btn btn-practice" type="button">
-                            Pay 100 KSH — Game + Unlock Earning Code
-                        </button>
-                        <button id="btn-pay-gameonly-150" class="mode-btn btn-friends" type="button">
-                            Pay 150 KSH — Game Access Only (No Code)
-                        </button>
-                    </div>
+                        <span id="copy-invite-label">Copy</span>
+                    </button>
+                    <button id="btn-share-invite-code" class="btn-practice" type="button">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="18" cy="5" r="3"></circle>
+                            <circle cx="6" cy="12" r="3"></circle>
+                            <circle cx="18" cy="19" r="3"></circle>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                        </svg>
+                        <span>Share</span>
+                    </button>
                 </div>
+            </div>
 
-                <div id="invite-share-feedback" class="status-pill"></div>
+            <div id="invite-share-feedback" class="status-pill"></div>
 
-                <!-- List of All Invited Friends -->
-                <div class="invites-list-section">
-                    <div class="invites-list-header">
-                        <span>Invited Friends (+30 KSH Each)</span>
-                        <span id="invited-count-pill">0 INVITED</span>
-                    </div>
-                    <div id="invited-friends-list" class="invites-list-box"></div>
+            <!-- List of All Invited Friends -->
+            <div class="invites-list-section">
+                <div class="invites-list-header">
+                    <span>Invited Friends</span>
+                    <span id="invited-count-pill">0 INVITED</span>
+                </div>
+                <div id="invited-friends-list" class="invites-list-box"></div>
+            </div>
+
+            <!-- Redeem Friend's Invite Code Row -->
+            <div id="redeem-invite-section" class="input-group" style="margin-top:2px;">
+                <label class="input-label" for="redeem-invite-input">Have a friend's invite code?</label>
+                <div class="redeem-invite-row">
+                    <input id="redeem-invite-input" class="clean-input" type="text" maxlength="8" placeholder="ENTER CODE" autocomplete="off" />
+                    <button id="btn-redeem-invite" class="btn-friends" type="button">Redeem</button>
                 </div>
             </div>
         </div>
@@ -1869,7 +1645,7 @@
         <div class="modal-box">
             <h2 id="mpesa-modal-title" class="modal-title">Enter M-PESA Number</h2>
             <p id="mpesa-modal-subtitle" class="modal-desc">
-                Amount to pay: <strong>100 KSH</strong>.
+                Amount to pay: <strong>30 KSH</strong>.
             </p>
 
             <div class="input-group">
@@ -1892,7 +1668,7 @@
             <div class="palpluss-header-row">
                 <div class="palpluss-header-meta">
                     <span id="palpluss-purpose-label" class="palpluss-header-title">MAWE TATU Checkout</span>
-                    <span id="palpluss-locked-info" class="palpluss-header-sub">100 KSH • 0712345678</span>
+                    <span id="palpluss-locked-info" class="palpluss-header-sub">30 KSH • 0712345678</span>
                 </div>
                 <button id="palpluss-close-x-btn" class="modal-close-x-btn" type="button" aria-label="Cancel Payment" title="Cancel">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
@@ -1955,7 +1731,7 @@
         </div>
     </div>
 
-    <!-- Multiplayer 4-Character Room Code Modal -->
+    <!-- Multiplayer 4-Character Room Code Modal (Segmented Create / Join Toggle with Persistent Create State) -->
     <div id="mp-modal" class="modal-backdrop hidden">
         <div class="modal-box">
             <div class="shop-header-row">
@@ -1995,7 +1771,7 @@
         </div>
     </div>
 
-    <!-- Piece Skins Shop Modal -->
+    <!-- Piece Skins Shop Modal (No Done button; every locked skin is 30 KSH) -->
     <div id="shop-modal" class="modal-backdrop hidden">
         <div class="modal-box">
             <div class="shop-header-row">
@@ -2116,14 +1892,12 @@
 
 <script>
 // =========================================================================
-// PALPLUSS PAYLINK, TWO-TIER PLANS & COMMISSION CONFIGURATION
+// PALPLUSS PAYLINK & SKIN PRICE CONFIGURATION
 // =========================================================================
 const PALPLUSS_PAYLINK_ID = '1fbb7b69-ac0e-4439-a08d-40bfd9ee13de';
 const PALPLUSS_ORIGIN = 'https://link.palpluss.com';
 const SKIN_PRICE_KSH = 30;
-const PLAN_CODE_EARN_KSH = 100;   // Game + Invite Code to continue earning +30 KSH per referral
-const PLAN_GAME_ONLY_KSH = 150;   // Game only without earning invite code
-const INVITE_COMMISSION_KSH = 30; // +30 KSH commission per successful payment
+const INVITE_BONUS_KSH = 10;
 
 const PIECES_PER_PLAYER = 3;
 const POPUP_DELAY_MS = 470;
@@ -2221,7 +1995,6 @@ const SKINS = [
 
 const state = {
     currentUser: null,
-    selectedRegPlan: 'code100', // 'code100' (100 KSH with earning code) | 'game150' (150 KSH game only, no code)
     mode: 'practice',
     myPlayerNum: 1,
     opponentName: 'Bot',
@@ -2261,11 +2034,6 @@ const tabLoginEl = document.getElementById('tab-login');
 const tabRegisterEl = document.getElementById('tab-register');
 const authNicknameEl = document.getElementById('auth-nickname');
 const authPinEl = document.getElementById('auth-pin');
-const registerExtraFieldsEl = document.getElementById('register-extra-fields');
-const planCard100El = document.getElementById('plan-card-100');
-const planCard150El = document.getElementById('plan-card-150');
-const registerInviteGroupEl = document.getElementById('register-invite-group');
-const authInviteCodeEl = document.getElementById('auth-invite-code');
 const authErrorEl = document.getElementById('auth-error');
 const authSubmitBtnEl = document.getElementById('auth-submit-btn');
 
@@ -2284,24 +2052,20 @@ const btnPracticeEl = document.getElementById('btn-practice');
 const btnPlayFriendsEl = document.getElementById('btn-play-friends');
 const btnDonateEl = document.getElementById('btn-donate');
 
-// Fullscreen Invites & Referral Modal Elements
+// Invites & Referral Modal Elements
 const invitesModalEl = document.getElementById('invites-modal');
 const invitesCloseXBtnEl = document.getElementById('invites-close-x-btn');
 const invitesModalBalanceEl = document.getElementById('invites-modal-balance');
-const invitesSubtitleDescEl = document.getElementById('invites-subtitle-desc');
 const personalInviteCodeTextEl = document.getElementById('personal-invite-code-text');
-const inviteCodeLockBadgeEl = document.getElementById('invite-code-lock-badge');
 const btnCopyInviteCodeEl = document.getElementById('btn-copy-invite-code');
 const copyInviteLabelEl = document.getElementById('copy-invite-label');
 const btnShareInviteCodeEl = document.getElementById('btn-share-invite-code');
 const inviteShareFeedbackEl = document.getElementById('invite-share-feedback');
-const unlockEarningBannerEl = document.getElementById('unlock-earning-banner');
-const unlockBannerHeadingEl = document.getElementById('unlock-banner-heading');
-const unlockBannerCopyEl = document.getElementById('unlock-banner-copy');
-const btnPayUnlock100El = document.getElementById('btn-pay-unlock-100');
-const btnPayGameOnly150El = document.getElementById('btn-pay-gameonly-150');
 const invitedCountPillEl = document.getElementById('invited-count-pill');
 const invitedFriendsListEl = document.getElementById('invited-friends-list');
+const redeemInviteSectionEl = document.getElementById('redeem-invite-section');
+const redeemInviteInputEl = document.getElementById('redeem-invite-input');
+const btnRedeemInviteEl = document.getElementById('btn-redeem-invite');
 
 // Donate Modal Elements
 const donateModalEl = document.getElementById('donate-modal');
@@ -2334,7 +2098,7 @@ const paymentSuccessDescEl = document.getElementById('payment-success-desc');
 const paymentSuccessPerksEl = document.getElementById('payment-success-perks');
 const paymentSuccessActionBtnEl = document.getElementById('payment-success-action-btn');
 
-// Multiplayer Modal Elements
+// Multiplayer Modal Elements (Segmented Toggle + Persistent Host Room)
 const mpModalEl = document.getElementById('mp-modal');
 const mpToggleTrackEl = document.getElementById('mp-toggle-track');
 const tabCreateRoomEl = document.getElementById('tab-create-room');
@@ -2519,7 +2283,7 @@ function showRoundEndPopup(winner) {
 }
 
 // =========================================================================
-// AUTHENTICATION, TWO-TIER PLANS (100 KSH vs 150 KSH), BALANCE & INVITES
+// AUTHENTICATION, BALANCE, INVITES & OWNED SKINS PERSISTENCE
 // =========================================================================
 function getUsersDB() {
     try {
@@ -2563,10 +2327,7 @@ function persistCurrentUser() {
         balance: Number(state.currentUser.balance) || 0,
         inviteCode: state.currentUser.inviteCode,
         invitedFriends: Array.isArray(state.currentUser.invitedFriends) ? state.currentUser.invitedFriends : [],
-        hasPaid: Boolean(state.currentUser.hasPaid),
-        codeUnlocked: Boolean(state.currentUser.codeUnlocked),
-        pendingReferrerNick: state.currentUser.pendingReferrerNick || '',
-        commissionPaidToReferrer: Boolean(state.currentUser.commissionPaidToReferrer)
+        redeemedInviteFrom: state.currentUser.redeemedInviteFrom || ''
     };
     saveUsersDB(db);
     updateSkinsUIState();
@@ -2617,40 +2378,11 @@ authPinEl.addEventListener('input', () => {
     authPinEl.value = authPinEl.value.replace(/\D/g, '').slice(0, 4);
 });
 
-authInviteCodeEl.addEventListener('input', () => {
-    authInviteCodeEl.value = authInviteCodeEl.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 8);
-});
-
-function selectRegistrationPlan(plan) {
-    state.selectedRegPlan = plan;
-    if (plan === 'code100') {
-        planCard100El.classList.add('selected-plan');
-        planCard150El.classList.remove('selected-plan-amber');
-        registerInviteGroupEl.classList.remove('hidden');
-        if (authMode === 'register') {
-            authSubmitBtnEl.textContent = 'Register & Pay 100 KSH';
-            authSubmitBtnEl.className = 'mode-btn btn-practice';
-        }
-    } else {
-        planCard100El.classList.remove('selected-plan');
-        planCard150El.classList.add('selected-plan-amber');
-        registerInviteGroupEl.classList.add('hidden');
-        if (authMode === 'register') {
-            authSubmitBtnEl.textContent = 'Register & Pay 150 KSH';
-            authSubmitBtnEl.className = 'mode-btn btn-friends';
-        }
-    }
-}
-
-planCard100El.addEventListener('click', () => selectRegistrationPlan('code100'));
-planCard150El.addEventListener('click', () => selectRegistrationPlan('game150'));
-
 tabLoginEl.addEventListener('click', () => {
     authMode = 'login';
     authToggleTrackEl.classList.remove('register-active');
     tabLoginEl.classList.add('active');
     tabRegisterEl.classList.remove('active');
-    registerExtraFieldsEl.classList.add('hidden');
     authSubmitBtnEl.textContent = 'Log In';
     authSubmitBtnEl.className = 'mode-btn btn-practice';
     authErrorEl.textContent = '';
@@ -2661,8 +2393,8 @@ tabRegisterEl.addEventListener('click', () => {
     authToggleTrackEl.classList.add('register-active');
     tabRegisterEl.classList.add('active');
     tabLoginEl.classList.remove('active');
-    registerExtraFieldsEl.classList.remove('hidden');
-    selectRegistrationPlan(state.selectedRegPlan || 'code100');
+    authSubmitBtnEl.textContent = 'Register';
+    authSubmitBtnEl.className = 'mode-btn btn-friends';
     authErrorEl.textContent = '';
 });
 
@@ -2686,22 +2418,6 @@ authSubmitBtnEl.addEventListener('click', () => {
             authErrorEl.textContent = 'Nickname already registered. Toggle to Log In.';
             return;
         }
-
-        let referrerNick = '';
-        if (state.selectedRegPlan === 'code100') {
-            const enteredInvite = authInviteCodeEl.value.trim().toUpperCase();
-            if (enteredInvite) {
-                const inviterEntry = Object.entries(db).find(
-                    ([, u]) => u && u.codeUnlocked && u.inviteCode === enteredInvite
-                );
-                if (!inviterEntry) {
-                    authErrorEl.textContent = 'Invalid or locked invite code. Leave blank or check code.';
-                    return;
-                }
-                referrerNick = inviterEntry[0];
-            }
-        }
-
         const newUserRecord = {
             nickname: nick,
             pin,
@@ -2711,22 +2427,12 @@ authSubmitBtnEl.addEventListener('click', () => {
             balance: 0,
             inviteCode: createInviteCodeForUser(nick, db),
             invitedFriends: [],
-            hasPaid: false,
-            codeUnlocked: false,
-            pendingReferrerNick: referrerNick,
-            commissionPaidToReferrer: false
+            redeemedInviteFrom: ''
         };
 
         db[nick] = newUserRecord;
         saveUsersDB(db);
         loginSuccess(nick, db[nick]);
-
-        // Immediately launch Palpluss M-PESA checkout for the selected plan (100 KSH or 150 KSH)
-        if (state.selectedRegPlan === 'code100') {
-            startPalplussPaymentFlow('plan_code_100', PLAN_CODE_EARN_KSH, null);
-        } else {
-            startPalplussPaymentFlow('plan_game_150', PLAN_GAME_ONLY_KSH, null);
-        }
     } else {
         if (!db[nick]) {
             authErrorEl.textContent = 'Account not found. Toggle to Register.';
@@ -2763,10 +2469,7 @@ function loginSuccess(nick, userData) {
         balance: Number(userData.balance) || 0,
         inviteCode,
         invitedFriends: Array.isArray(userData.invitedFriends) ? userData.invitedFriends : [],
-        hasPaid: Boolean(userData.hasPaid),
-        codeUnlocked: Boolean(userData.codeUnlocked),
-        pendingReferrerNick: userData.pendingReferrerNick || '',
-        commissionPaidToReferrer: Boolean(userData.commissionPaidToReferrer)
+        redeemedInviteFrom: userData.redeemedInviteFrom || ''
     };
 
     persistCurrentUser();
@@ -2774,7 +2477,6 @@ function loginSuccess(nick, userData) {
     badgeNicknameEl.textContent = nick;
     authNicknameEl.value = '';
     authPinEl.value = '';
-    authInviteCodeEl.value = '';
     authErrorEl.textContent = '';
     showHomeUI();
 }
@@ -2815,10 +2517,7 @@ function syncCurrentUserFromDB() {
         state.currentUser.balance = Number(fresh.balance) || 0;
         if (fresh.inviteCode) state.currentUser.inviteCode = fresh.inviteCode;
         state.currentUser.invitedFriends = Array.isArray(fresh.invitedFriends) ? fresh.invitedFriends : [];
-        state.currentUser.hasPaid = Boolean(fresh.hasPaid);
-        state.currentUser.codeUnlocked = Boolean(fresh.codeUnlocked);
-        state.currentUser.pendingReferrerNick = fresh.pendingReferrerNick || '';
-        state.currentUser.commissionPaidToReferrer = Boolean(fresh.commissionPaidToReferrer);
+        state.currentUser.redeemedInviteFrom = fresh.redeemedInviteFrom || '';
     }
     updateSkinsUIState();
     updateBalanceUI();
@@ -2853,49 +2552,15 @@ function showGameUI() {
 }
 
 // =========================================================================
-// FULL-SCREEN INVITE & EARN POP-UP (LOCKED CODE IF UNPAID, +30 KSH COMMISSION)
+// INVITES & REFERRAL PAGE / MODAL LOGIC (OPENED BY TOP-RIGHT BALANCE + PILL)
 // =========================================================================
 function renderInvitesModal() {
     syncCurrentUserFromDB();
     const user = state.currentUser;
     if (!user) return;
 
+    personalInviteCodeTextEl.textContent = user.inviteCode || '------';
     updateBalanceUI();
-
-    const isCodeUnlocked = Boolean(user.hasPaid && user.codeUnlocked);
-    const hasPaidGameOnly = Boolean(user.hasPaid && !user.codeUnlocked);
-
-    if (isCodeUnlocked) {
-        personalInviteCodeTextEl.textContent = user.inviteCode || '------';
-        personalInviteCodeTextEl.classList.remove('code-locked');
-        inviteCodeLockBadgeEl.classList.add('hidden');
-        btnCopyInviteCodeEl.disabled = false;
-        btnShareInviteCodeEl.disabled = false;
-        unlockEarningBannerEl.classList.add('hidden');
-        invitesSubtitleDescEl.innerHTML = `Your invite code is active! Earn <strong>+${INVITE_COMMISSION_KSH} KSH</strong> commission for every friend who registers and pays successfully.`;
-    } else {
-        // Locked code state when user has not paid for the 100 KSH earning plan
-        personalInviteCodeTextEl.textContent = '••••••';
-        personalInviteCodeTextEl.classList.add('code-locked');
-        inviteCodeLockBadgeEl.classList.remove('hidden');
-        btnCopyInviteCodeEl.disabled = true;
-        btnShareInviteCodeEl.disabled = true;
-        unlockEarningBannerEl.classList.remove('hidden');
-
-        if (hasPaidGameOnly) {
-            invitesSubtitleDescEl.innerHTML = `You currently have <strong>Game Access Only (150 KSH)</strong>. Your invite code is locked.`;
-            unlockBannerHeadingEl.textContent = 'Unlock Your Invite Code to Earn';
-            unlockBannerCopyEl.innerHTML = `Pay <strong>100 KSH</strong> to unlock your personal invite code and start earning <strong>+${INVITE_COMMISSION_KSH} KSH</strong> commission per successful payment.`;
-            btnPayUnlock100El.textContent = 'Pay 100 KSH — Unlock Earning Code';
-            btnPayGameOnly150El.classList.add('hidden');
-        } else {
-            invitesSubtitleDescEl.innerHTML = `Your invite code is currently <strong>LOCKED</strong> until payment is completed.`;
-            unlockBannerHeadingEl.textContent = 'Activate Game & Earning Code';
-            unlockBannerCopyEl.innerHTML = `Choose <strong>100 KSH</strong> to unlock the game + your invite code and earn <strong>+${INVITE_COMMISSION_KSH} KSH</strong> per successful referral, or <strong>150 KSH</strong> for game access only (no code).`;
-            btnPayUnlock100El.textContent = 'Pay 100 KSH — Game + Unlock Earning Code';
-            btnPayGameOnly150El.classList.remove('hidden');
-        }
-    }
 
     const invited = Array.isArray(user.invitedFriends) ? user.invitedFriends : [];
     invitedCountPillEl.textContent = `${invited.length} INVITED`;
@@ -2904,9 +2569,7 @@ function renderInvitesModal() {
     if (invited.length === 0) {
         const emptyEl = document.createElement('div');
         emptyEl.className = 'invites-empty-state';
-        emptyEl.textContent = isCodeUnlocked
-            ? `No friends invited yet. Copy or share your code above to earn +${INVITE_COMMISSION_KSH} KSH per successful payment!`
-            : `Unlock your invite code above to start inviting friends and earning +${INVITE_COMMISSION_KSH} KSH per successful payment!`;
+        emptyEl.textContent = 'No friends invited yet. Copy or share your code above to start earning!';
         invitedFriendsListEl.appendChild(emptyEl);
     } else {
         invited.slice().reverse().forEach(entry => {
@@ -2914,8 +2577,8 @@ function renderInvitesModal() {
             row.className = 'invited-friend-row';
 
             const friendNick = (entry && entry.nickname) ? entry.nickname : 'PLAYER';
-            const joinedDate = (entry && entry.date) ? entry.date : 'Paid';
-            const bonus = (entry && typeof entry.bonus === 'number') ? entry.bonus : INVITE_COMMISSION_KSH;
+            const joinedDate = (entry && entry.date) ? entry.date : 'Joined';
+            const bonus = (entry && typeof entry.bonus === 'number') ? entry.bonus : INVITE_BONUS_KSH;
 
             row.innerHTML = `
                 <div class="invited-friend-info">
@@ -2930,17 +2593,20 @@ function renderInvitesModal() {
             invitedFriendsListEl.appendChild(row);
         });
     }
-}
 
-function openInvitesFullscreenModal(noticeMsg = '') {
-    inviteShareFeedbackEl.className = noticeMsg ? 'error-text' : 'status-pill';
-    inviteShareFeedbackEl.textContent = noticeMsg;
-    renderInvitesModal();
-    invitesModalEl.classList.remove('hidden');
+    if (user.redeemedInviteFrom) {
+        redeemInviteSectionEl.classList.add('hidden');
+    } else {
+        redeemInviteSectionEl.classList.remove('hidden');
+        redeemInviteInputEl.value = '';
+    }
 }
 
 balanceBadgeEl.addEventListener('click', () => {
-    openInvitesFullscreenModal('');
+    inviteShareFeedbackEl.className = 'status-pill';
+    inviteShareFeedbackEl.textContent = '';
+    renderInvitesModal();
+    invitesModalEl.classList.remove('hidden');
 });
 
 invitesCloseXBtnEl.addEventListener('click', () => {
@@ -2951,16 +2617,6 @@ invitesModalEl.addEventListener('click', (e) => {
     if (e.target === invitesModalEl) {
         invitesModalEl.classList.add('hidden');
     }
-});
-
-btnPayUnlock100El.addEventListener('click', () => {
-    invitesModalEl.classList.add('hidden');
-    startPalplussPaymentFlow('plan_code_100', PLAN_CODE_EARN_KSH, null);
-});
-
-btnPayGameOnly150El.addEventListener('click', () => {
-    invitesModalEl.classList.add('hidden');
-    startPalplussPaymentFlow('plan_game_150', PLAN_GAME_ONLY_KSH, null);
 });
 
 function copyTextFallback(text) {
@@ -2976,7 +2632,7 @@ function copyTextFallback(text) {
 }
 
 btnCopyInviteCodeEl.addEventListener('click', () => {
-    if (!state.currentUser || !state.currentUser.hasPaid || !state.currentUser.codeUnlocked) return;
+    if (!state.currentUser || !state.currentUser.inviteCode) return;
     const code = state.currentUser.inviteCode;
     copyTextFallback(code);
     copyInviteLabelEl.textContent = '✓ Copied!';
@@ -2988,9 +2644,9 @@ btnCopyInviteCodeEl.addEventListener('click', () => {
 });
 
 btnShareInviteCodeEl.addEventListener('click', async () => {
-    if (!state.currentUser || !state.currentUser.hasPaid || !state.currentUser.codeUnlocked) return;
+    if (!state.currentUser || !state.currentUser.inviteCode) return;
     const code = state.currentUser.inviteCode;
-    const shareMessage = `Join me on MAWE TATU! Register with my invite code ${code} for the 100 KSH earning plan!`;
+    const shareMessage = `Join me on MAWE TATU! Use my invite code ${code} to claim +${INVITE_BONUS_KSH} KSH bonus!`;
     const shareUrl = window.location.href;
 
     if (navigator.share) {
@@ -3013,8 +2669,69 @@ btnShareInviteCodeEl.addEventListener('click', async () => {
     inviteShareFeedbackEl.textContent = 'Invite link & code copied to share!';
 });
 
+redeemInviteInputEl.addEventListener('input', () => {
+    redeemInviteInputEl.value = redeemInviteInputEl.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 8);
+});
+
+btnRedeemInviteEl.addEventListener('click', () => {
+    if (!state.currentUser) return;
+    const enteredCode = redeemInviteInputEl.value.trim().toUpperCase();
+    if (!enteredCode) {
+        inviteShareFeedbackEl.className = 'error-text';
+        inviteShareFeedbackEl.textContent = 'Enter an invite code first.';
+        return;
+    }
+
+    if (enteredCode === state.currentUser.inviteCode) {
+        inviteShareFeedbackEl.className = 'error-text';
+        inviteShareFeedbackEl.textContent = 'You cannot redeem your own invite code.';
+        return;
+    }
+
+    if (state.currentUser.redeemedInviteFrom) {
+        inviteShareFeedbackEl.className = 'error-text';
+        inviteShareFeedbackEl.textContent = 'You have already redeemed an invite code.';
+        return;
+    }
+
+    const db = getUsersDB();
+    const inviterEntry = Object.entries(db).find(([, u]) => u && u.inviteCode === enteredCode);
+
+    if (!inviterEntry) {
+        inviteShareFeedbackEl.className = 'error-text';
+        inviteShareFeedbackEl.textContent = 'Invite code not found. Check & try again.';
+        return;
+    }
+
+    const [inviterNick, inviterData] = inviterEntry;
+    const todayLabel = new Date().toLocaleDateString('en-KE', { month: 'short', day: 'numeric', year: 'numeric' });
+
+    // Credit the inviter
+    const inviterList = Array.isArray(inviterData.invitedFriends) ? inviterData.invitedFriends : [];
+    if (!inviterList.some(item => item.nickname === state.currentUser.nickname)) {
+        inviterList.push({
+            nickname: state.currentUser.nickname,
+            date: todayLabel,
+            bonus: INVITE_BONUS_KSH
+        });
+    }
+    inviterData.invitedFriends = inviterList;
+    inviterData.balance = (Number(inviterData.balance) || 0) + INVITE_BONUS_KSH;
+    db[inviterNick] = inviterData;
+    saveUsersDB(db);
+
+    // Credit current user
+    state.currentUser.balance = (Number(state.currentUser.balance) || 0) + INVITE_BONUS_KSH;
+    state.currentUser.redeemedInviteFrom = inviterNick;
+    persistCurrentUser();
+
+    inviteShareFeedbackEl.className = 'status-pill';
+    inviteShareFeedbackEl.textContent = `+${INVITE_BONUS_KSH} KSH added from ${inviterNick}'s invite!`;
+    renderInvitesModal();
+});
+
 // =========================================================================
-// PALPLUSS IFRAME PAYMENT WIDGET FLOW (100 KSH, 150 KSH, SKINS 30 KSH, DONATE)
+// PALPLUSS IFRAME PAYMENT WIDGET FLOW (FOR SKINS @ 30 KSH & DONATIONS)
 // =========================================================================
 function normalizeKenyanPhone(raw) {
     const cleaned = (raw || '').replace(/[\s\-()]/g, '');
@@ -3046,22 +2763,17 @@ function startPalplussPaymentFlow(purpose, amount, skinObj = null) {
         phone: ''
     };
 
-    mpesaModalTitleEl.textContent = 'Enter M-PESA Number';
+    const isDonation = purpose === 'donate';
+    const itemDesc = (purpose === 'skin' && skinObj)
+        ? `${skinObj.name} Skin`
+        : 'MAWE TATU';
 
-    if (purpose === 'donate') {
-        mpesaModalSubtitleEl.innerHTML = `Donating <strong>${validAmount} KSH</strong> to support <strong>MAWE TATU</strong>.`;
+    mpesaModalTitleEl.textContent = 'Enter M-PESA Number';
+    if (isDonation) {
+        mpesaModalSubtitleEl.innerHTML = `Donating <strong>${validAmount} KSH</strong> to support <strong>${itemDesc}</strong>.`;
         mpesaPhoneContinueBtnEl.textContent = 'Continue to Donate';
         mpesaPhoneContinueBtnEl.className = 'btn-donate';
-    } else if (purpose === 'plan_code_100') {
-        mpesaModalSubtitleEl.innerHTML = `Paying <strong>100 KSH</strong> for <strong>Game + Earning Invite Code (+30 KSH/referral)</strong>.`;
-        mpesaPhoneContinueBtnEl.textContent = 'Proceed to Pay 100 KSH';
-        mpesaPhoneContinueBtnEl.className = 'btn-practice';
-    } else if (purpose === 'plan_game_150') {
-        mpesaModalSubtitleEl.innerHTML = `Paying <strong>150 KSH</strong> for <strong>MAWE TATU Game Access (No Invite Code)</strong>.`;
-        mpesaPhoneContinueBtnEl.textContent = 'Proceed to Pay 150 KSH';
-        mpesaPhoneContinueBtnEl.className = 'btn-friends';
     } else {
-        const itemDesc = skinObj ? `${skinObj.name} Skin` : 'MAWE TATU';
         mpesaModalSubtitleEl.innerHTML = `Paying <strong>${validAmount} KSH</strong> for <strong>${itemDesc}</strong>.`;
         mpesaPhoneContinueBtnEl.textContent = 'Proceed to Pay';
         mpesaPhoneContinueBtnEl.className = 'btn-practice';
@@ -3113,22 +2825,11 @@ function openPalplussIframeModal() {
     if (!p) return;
 
     const nick = state.currentUser ? state.currentUser.nickname : 'PLAYER';
-    let titleLabel = 'MAWE TATU Checkout';
-    let note = `MAWE TATU - ${nick}`;
-
-    if (p.purpose === 'skin' && p.skin) {
-        titleLabel = `Unlock ${p.skin.name}`;
-        note = `MAWE TATU Skin (${p.skin.name}) - ${nick}`;
-    } else if (p.purpose === 'plan_code_100') {
-        titleLabel = 'Game + Earning Code (100 KSH)';
-        note = `MAWE TATU 100 KSH Code Plan - ${nick}`;
-    } else if (p.purpose === 'plan_game_150') {
-        titleLabel = 'Game Access Only (150 KSH)';
-        note = `MAWE TATU 150 KSH Game Plan - ${nick}`;
-    } else if (p.purpose === 'donate') {
-        titleLabel = 'MAWE TATU Donation';
-        note = `MAWE TATU Donation - ${nick}`;
-    }
+    const isSkin = p.purpose === 'skin' && p.skin;
+    const titleLabel = isSkin ? `Unlock ${p.skin.name}` : 'MAWE TATU Donation';
+    const note = isSkin
+        ? `MAWE TATU Skin (${p.skin.name}) - ${nick}`
+        : `MAWE TATU Donation - ${nick}`;
 
     palplussPurposeLabelEl.textContent = titleLabel;
     palplussLockedInfoEl.textContent = `${p.amount} KSH • ${p.phone}`;
@@ -3152,54 +2853,11 @@ function closePalplussIframeModal() {
     palplussIframeEl.src = 'about:blank';
 }
 
-function creditReferrerOnSuccessfulPayment() {
-    const user = state.currentUser;
-    if (!user || !user.pendingReferrerNick || user.commissionPaidToReferrer) return;
-
-    const db = getUsersDB();
-    const inviterData = db[user.pendingReferrerNick];
-    if (inviterData && inviterData.codeUnlocked) {
-        const todayLabel = new Date().toLocaleDateString('en-KE', { month: 'short', day: 'numeric', year: 'numeric' });
-        const inviterList = Array.isArray(inviterData.invitedFriends) ? inviterData.invitedFriends : [];
-        if (!inviterList.some(item => item.nickname === user.nickname)) {
-            inviterList.push({
-                nickname: user.nickname,
-                date: todayLabel,
-                bonus: INVITE_COMMISSION_KSH
-            });
-        }
-        inviterData.invitedFriends = inviterList;
-        inviterData.balance = (Number(inviterData.balance) || 0) + INVITE_COMMISSION_KSH;
-        db[user.pendingReferrerNick] = inviterData;
-        saveUsersDB(db);
-    }
-
-    user.commissionPaidToReferrer = true;
-    persistCurrentUser();
-}
-
 function showCelebratoryPaymentPopup({ purpose, amount, skin, txId }) {
     const refText = txId ? `M-PESA • REF ${txId}` : `M-PESA • ${amount} KSH PAID`;
     paymentSuccessRefEl.textContent = refText;
 
-    if (purpose === 'plan_code_100') {
-        const myCode = state.currentUser ? state.currentUser.inviteCode : '';
-        paymentSuccessTitleEl.textContent = 'CODE UNLOCKED!';
-        paymentSuccessDescEl.innerHTML = `Your game access and personal invite code <strong>${myCode}</strong> are now unlocked!`;
-        paymentSuccessPerksEl.innerHTML = `
-            <div><span class="perk-check">★</span><span>Invite Code: <strong>${myCode}</strong> (Active)</span></div>
-            <div><span class="perk-check">✓</span><span>Commission: <strong>+${INVITE_COMMISSION_KSH} KSH</strong> per successful referral</span></div>
-        `;
-        paymentSuccessActionBtnEl.textContent = 'Start Playing & Earning';
-    } else if (purpose === 'plan_game_150') {
-        paymentSuccessTitleEl.textContent = 'GAME UNLOCKED!';
-        paymentSuccessDescEl.innerHTML = `Full access to <strong>MAWE TATU</strong> (Practice &amp; Multiplayer) is now unlocked!`;
-        paymentSuccessPerksEl.innerHTML = `
-            <div><span class="perk-check">✓</span><span>Plan: <strong>Game Access Only (150 KSH)</strong></span></div>
-            <div><span class="perk-check">★</span><span>Practice vs Bot &amp; Play with Friends Unlocked</span></div>
-        `;
-        paymentSuccessActionBtnEl.textContent = 'Start Playing';
-    } else if (purpose === 'skin' && skin) {
+    if (purpose === 'skin' && skin) {
         paymentSuccessTitleEl.textContent = 'SKIN UNLOCKED!';
         paymentSuccessDescEl.innerHTML = `<strong>${skin.name}</strong> has been unlocked and automatically equipped to your pieces!`;
         paymentSuccessPerksEl.innerHTML = `
@@ -3230,28 +2888,15 @@ function handleConfirmedPalplussPayment(txData = {}) {
 
     closePalplussIframeModal();
 
-    if (state.currentUser) {
-        if (p.purpose === 'plan_code_100') {
-            state.currentUser.hasPaid = true;
-            state.currentUser.codeUnlocked = true;
-            persistCurrentUser();
-            creditReferrerOnSuccessfulPayment();
-            renderInvitesModal();
-        } else if (p.purpose === 'plan_game_150') {
-            state.currentUser.hasPaid = true;
-            persistCurrentUser();
-            creditReferrerOnSuccessfulPayment();
-            renderInvitesModal();
-        } else if (p.purpose === 'skin' && p.skin) {
-            if (!state.currentUser.ownedSkins.includes(p.skin.id)) {
-                state.currentUser.ownedSkins.push(p.skin.id);
-            }
-            state.currentUser.equippedSkin = p.skin.id;
-            persistCurrentUser();
-            sendNet({ type: 'SKIN', skin: p.skin.id });
-            renderSkinShop();
-            renderAll();
+    if (p.purpose === 'skin' && p.skin && state.currentUser) {
+        if (!state.currentUser.ownedSkins.includes(p.skin.id)) {
+            state.currentUser.ownedSkins.push(p.skin.id);
         }
+        state.currentUser.equippedSkin = p.skin.id;
+        persistCurrentUser();
+        sendNet({ type: 'SKIN', skin: p.skin.id });
+        renderSkinShop();
+        renderAll();
     }
 
     const completedPayment = { ...p };
@@ -3327,7 +2972,7 @@ donateModalEl.addEventListener('click', (e) => {
 });
 
 // =========================================================================
-// PIECE SKIN SHOP LOGIC
+// PIECE SKIN SHOP LOGIC (NO DONE BUTTON; EVERY LOCKED SKIN IS 30 KSH)
 // =========================================================================
 function renderSkinShop() {
     syncCurrentUserFromDB();
@@ -3422,6 +3067,7 @@ backBtnEl.addEventListener('click', () => {
     );
 });
 
+// Send LEAVE signal cleanly if a player closes/refreshes the browser tab during a multiplayer match
 window.addEventListener('beforeunload', () => {
     if (state.mode === 'online' && state.conn && state.conn.open) {
         try { state.conn.send({ type: 'LEAVE' }); } catch {}
@@ -3429,17 +3075,8 @@ window.addEventListener('beforeunload', () => {
 });
 
 // =========================================================================
-// PLAY WITH FRIENDS (GATED BY PAYMENT CHECK)
+// PLAY WITH FRIENDS (SEGMENTED TOGGLE + PERSISTENT CREATE ROOM STATE)
 // =========================================================================
-function ensureUserHasPaidAccess() {
-    syncCurrentUserFromDB();
-    if (state.currentUser && state.currentUser.hasPaid) {
-        return true;
-    }
-    openInvitesFullscreenModal('Complete your 100 KSH or 150 KSH payment to unlock gameplay!');
-    return false;
-}
-
 function generateRoomCode() {
     const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
     let res = '';
@@ -3479,6 +3116,7 @@ function cleanupNetwork(notifyPeer = false, clearHosted = true) {
 }
 
 function ensurePersistentHostRoom(forceNew = false) {
+    // Reuse existing open/initializing hosted room unless forced to create a fresh code
     if (!forceNew && state.hostPeer && !state.hostPeer.destroyed && state.hostRoomCode) {
         hostCodeTextEl.textContent = state.hostRoomCode;
         mpHostStatusEl.textContent = state.hostRoomReady
@@ -3523,6 +3161,7 @@ function ensurePersistentHostRoom(forceNew = false) {
         state.conn = conn;
         state.roomCode = code;
         state.myPlayerNum = 1;
+        // Transfer ownership of hostPeer to active match peer so toggling state stays clean
         state.hostPeer = null;
         state.hostRoomCode = null;
         state.hostRoomReady = false;
@@ -3558,8 +3197,6 @@ tabJoinRoomEl.addEventListener('click', () => {
 });
 
 btnPlayFriendsEl.addEventListener('click', () => {
-    if (!ensureUserHasPaidAccess()) return;
-
     if (state.conn) {
         try { state.conn.close(); } catch {}
         state.conn = null;
@@ -3745,11 +3382,9 @@ function startOnlineMatch() {
 }
 
 // =========================================================================
-// PRACTICE MODE (GATED BY PAYMENT CHECK)
+// PRACTICE MODE
 // =========================================================================
 btnPracticeEl.addEventListener('click', () => {
-    if (!ensureUserHasPaidAccess()) return;
-
     cleanupNetwork(false, true);
     state.mode = 'practice';
     state.myPlayerNum = 1;
