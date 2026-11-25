@@ -1,0 +1,4438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MAWE TATU</title>
+    <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        html {
+            zoom: 0.67;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Warm Light Hardwood / Honey Oak Background */
+        body {
+            margin: 0;
+            padding: 8px;
+            background-color: #D2A472;
+            background-image:
+                radial-gradient(circle at 22% 18%, rgba(255, 244, 222, 0.42) 0%, transparent 50%),
+                radial-gradient(circle at 82% 84%, rgba(154, 102, 48, 0.28) 0%, transparent 52%),
+                repeating-linear-gradient(
+                    90deg,
+                    rgba(138, 88, 38, 0.065) 0px,
+                    rgba(138, 88, 38, 0.065) 2px,
+                    transparent 2px,
+                    transparent 18px,
+                    rgba(255, 236, 206, 0.09) 18px,
+                    rgba(255, 236, 206, 0.09) 21px,
+                    transparent 21px,
+                    transparent 46px
+                ),
+                repeating-linear-gradient(
+                    180deg,
+                    rgba(120, 72, 28, 0.05) 0px,
+                    rgba(120, 72, 28, 0.05) 1px,
+                    transparent 1px,
+                    transparent 110px
+                ),
+                linear-gradient(145deg, #DFB686 0%, #CCA06E 48%, #BC8B56 100%);
+            height: calc(100dvh / 0.67);
+            width: calc(100vw / 0.67);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: system-ui, -apple-system, sans-serif;
+            color: #FEF3C7;
+        }
+
+        @supports not (zoom: 0.67) {
+            html {
+                zoom: normal;
+            }
+            body {
+                transform: scale(0.67);
+                transform-origin: top left;
+                width: calc(100vw / 0.67);
+                height: calc(100dvh / 0.67);
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Floating Circle Icon Buttons */
+        .circle-icon-btn {
+            position: fixed;
+            width: 48px;
+            height: 48px;
+            border-radius: 9999px;
+            background: rgba(38, 19, 11, 0.94);
+            border: 1.5px solid rgba(245, 158, 11, 0.45);
+            color: #FDE68A;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 60;
+            box-shadow: 0 8px 20px rgba(62, 32, 12, 0.35);
+            backdrop-filter: blur(6px);
+            transition: transform 0.16s ease, background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .circle-icon-btn:hover {
+            background: rgba(56, 29, 17, 0.97);
+            border-color: rgba(251, 191, 36, 0.75);
+        }
+
+        .circle-icon-btn:active {
+            transform: scale(0.92);
+        }
+
+        #back-btn {
+            top: 14px;
+            left: 14px;
+        }
+
+        #logout-btn {
+            bottom: 18px;
+            left: 18px;
+            width: 64px;
+            height: 64px;
+            border-width: 2px;
+            color: #FCA5A5;
+            border-color: rgba(248, 113, 113, 0.5);
+            box-shadow: 0 10px 24px rgba(62, 32, 12, 0.4);
+        }
+
+        #shop-btn {
+            bottom: 18px;
+            right: 18px;
+            width: 64px;
+            height: 64px;
+            border-width: 2px;
+            color: #6EE7B7;
+            border-color: rgba(52, 211, 153, 0.5);
+            box-shadow: 0 10px 24px rgba(62, 32, 12, 0.4);
+        }
+
+        /* Player Badge Top-Left on Home */
+        #user-badge {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(38, 19, 11, 0.94);
+            border: 1.5px solid rgba(245, 158, 11, 0.45);
+            border-radius: 9999px;
+            padding: 7px 15px;
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #FDE68A;
+            z-index: 55;
+            box-shadow: 0 8px 20px rgba(62, 32, 12, 0.34);
+            backdrop-filter: blur(6px);
+        }
+
+        .vip-star-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #FDE047;
+        }
+
+        /* Top-Right Balance Pill with + Button on Home */
+        #balance-badge {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            background: rgba(38, 19, 11, 0.95);
+            border: 1.5px solid rgba(52, 211, 153, 0.52);
+            border-radius: 9999px;
+            padding: 5px 6px 5px 14px;
+            font-size: 13.5px;
+            font-weight: 900;
+            color: #6EE7B7;
+            z-index: 55;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(62, 32, 12, 0.36);
+            backdrop-filter: blur(6px);
+            transition: transform 0.16s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        #balance-badge:hover {
+            background: rgba(54, 28, 16, 0.98);
+            border-color: #34D399;
+        }
+
+        #balance-badge:active {
+            transform: scale(0.94);
+        }
+
+        .balance-amount-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            letter-spacing: 0.02em;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .balance-plus-circle {
+            width: 26px;
+            height: 26px;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: #062118;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.45);
+            flex-shrink: 0;
+        }
+
+        /* Always pinned at top-right of screen during game */
+        #unified-score-box {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(38, 19, 11, 0.94);
+            border: 1.5px solid rgba(245, 158, 11, 0.45);
+            border-radius: 9999px;
+            box-shadow: 0 8px 20px rgba(62, 32, 12, 0.36);
+            padding: 5px 13px;
+            gap: 9px;
+            z-index: 45;
+            backdrop-filter: blur(6px);
+        }
+
+        .score-half {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+            white-space: nowrap;
+            padding: 2px 6px;
+            border-radius: 9999px;
+            transition: background 0.2s ease;
+        }
+
+        .score-half.p1-half {
+            color: #F59E0B;
+        }
+
+        .score-half.p2-half {
+            color: #34D399;
+        }
+
+        .score-half.active-turn {
+            background: rgba(254, 240, 138, 0.14);
+        }
+
+        .win-count {
+            font-weight: 900;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .score-divider {
+            color: rgba(254, 243, 199, 0.35);
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 1;
+        }
+
+        /* Overlays with Light Woody Texture */
+        .full-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: calc(100vw / 0.67);
+            height: calc(100dvh / 0.67);
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            gap: 14px;
+            background-color: #D2A472;
+            background-image:
+                radial-gradient(circle at 22% 18%, rgba(255, 244, 222, 0.46) 0%, transparent 50%),
+                radial-gradient(circle at 82% 84%, rgba(154, 102, 48, 0.3) 0%, transparent 52%),
+                repeating-linear-gradient(
+                    90deg,
+                    rgba(138, 88, 38, 0.065) 0px,
+                    rgba(138, 88, 38, 0.065) 2px,
+                    transparent 2px,
+                    transparent 18px,
+                    rgba(255, 236, 206, 0.09) 18px,
+                    rgba(255, 236, 206, 0.09) 21px,
+                    transparent 21px,
+                    transparent 46px
+                ),
+                linear-gradient(145deg, #DFB686 0%, #CCA06E 48%, #BC8B56 100%);
+        }
+
+        .game-title {
+            margin: 0 0 8px 0;
+            font-size: 2.7rem;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            color: #2B1308;
+            text-align: center;
+            text-shadow: 0 2px 0 rgba(255, 243, 214, 0.65), 0 6px 16px rgba(62, 32, 12, 0.22);
+        }
+
+        .auth-card .game-title {
+            margin: 0 0 2px 0;
+            font-size: 2.1rem;
+            color: #FDE68A;
+            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+        }
+
+        .mode-btn {
+            width: 100%;
+            max-width: 300px;
+            padding: 15px 22px;
+            border-radius: 16px;
+            border: 1.5px solid rgba(43, 19, 8, 0.22);
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform 0.16s ease, box-shadow 0.2s ease, filter 0.2s ease;
+        }
+
+        .mode-btn:active:not(:disabled) {
+            transform: scale(0.97);
+        }
+
+        .mode-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: #062118;
+            box-shadow: 0 8px 20px rgba(6, 78, 59, 0.28);
+        }
+
+        .btn-friends {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            color: #1F0E06;
+            box-shadow: 0 8px 20px rgba(120, 53, 15, 0.28);
+        }
+
+        .btn-donate {
+            background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%);
+            color: #FFF1F2;
+            border-color: rgba(254, 205, 211, 0.45);
+            box-shadow: 0 8px 20px rgba(136, 19, 55, 0.28);
+        }
+
+        .btn-secondary {
+            background: rgba(52, 26, 15, 0.94);
+            color: #FDE68A;
+            border: 1.5px solid rgba(245, 158, 11, 0.45);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #EF4444 0%, #B91C1C 100%);
+            color: #FEF2F2;
+            border: 1.5px solid rgba(254, 202, 202, 0.35);
+        }
+
+        /* Auth Card & Segmented Toggle */
+        .auth-card {
+            width: 100%;
+            max-width: 375px;
+            max-height: 92dvh;
+            overflow-y: auto;
+            padding: 24px 22px 20px 22px;
+            border-radius: 26px;
+            background: radial-gradient(circle at 35% 20%, #522D1D 0%, #341A0F 75%, #26120A 100%);
+            box-shadow:
+                inset 0 2px 6px rgba(255, 225, 170, 0.18),
+                inset 0 -8px 18px rgba(0, 0, 0, 0.6),
+                0 22px 44px rgba(58, 28, 10, 0.46),
+                0 0 0 3px #6B3C26,
+                0 0 0 6px #2B150B;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .auth-toggle-track {
+            position: relative;
+            display: flex;
+            width: 100%;
+            padding: 4px;
+            border-radius: 14px;
+            background: rgba(18, 8, 4, 0.85);
+            border: 1.5px solid rgba(245, 158, 11, 0.28);
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        .auth-toggle-pill {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: calc(50% - 4px);
+            height: calc(100% - 8px);
+            border-radius: 10px;
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+            transition: transform 0.26s cubic-bezier(0.34, 1.4, 0.64, 1);
+            z-index: 1;
+        }
+
+        .auth-toggle-track.register-active .auth-toggle-pill,
+        .auth-toggle-track.join-active .auth-toggle-pill {
+            transform: translateX(100%);
+        }
+
+        .tab-btn {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            padding: 10px 8px;
+            border: none;
+            background: transparent;
+            color: rgba(254, 243, 199, 0.68);
+            font-weight: 800;
+            font-size: 14px;
+            letter-spacing: 0.03em;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .tab-btn.active {
+            color: #1F0E06;
+        }
+
+        .input-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .input-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: rgba(254, 243, 199, 0.78);
+            padding-left: 4px;
+            text-align: left;
+        }
+
+        .clean-input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: rgba(20, 9, 4, 0.9);
+            border: 1.5px solid rgba(245, 158, 11, 0.4);
+            color: #FEF3C7;
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-align: center;
+            text-transform: uppercase;
+            outline: none;
+            user-select: text;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .clean-input:focus {
+            border-color: #FDE047;
+            box-shadow: 0 0 0 3px rgba(253, 224, 71, 0.18);
+        }
+
+        .clean-input::placeholder {
+            text-transform: none;
+            letter-spacing: 0.04em;
+            color: rgba(254, 243, 199, 0.42);
+        }
+
+        /* Two-Tier Plan Selector Cards (100 KSH With Code vs 150 KSH Without Code) */
+        .tier-plans-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+            width: 100%;
+        }
+
+        .tier-plan-card {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 6px;
+            padding: 11px 11px;
+            border-radius: 15px;
+            background: rgba(18, 8, 4, 0.88);
+            border: 1.5px solid rgba(245, 158, 11, 0.3);
+            text-align: left;
+            cursor: pointer;
+            transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+        }
+
+        .tier-plan-card:active {
+            transform: scale(0.97);
+        }
+
+        .tier-plan-card.selected-plan {
+            border-color: #34D399;
+            background: rgba(16, 185, 129, 0.16);
+            box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.22);
+        }
+
+        .tier-plan-card.selected-plan-amber {
+            border-color: #F59E0B;
+            background: rgba(245, 158, 11, 0.16);
+            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.22);
+        }
+
+        .tier-price-tag {
+            font-size: 1.05rem;
+            font-weight: 900;
+            color: #6EE7B7;
+        }
+
+        .tier-plan-card.selected-plan-amber .tier-price-tag {
+            color: #FDE047;
+        }
+
+        .tier-plan-title {
+            font-size: 11.5px;
+            font-weight: 800;
+            color: #FEF3C7;
+            line-height: 1.25;
+        }
+
+        .tier-plan-sub {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: rgba(254, 243, 199, 0.68);
+            line-height: 1.3;
+        }
+
+        .error-text {
+            color: #FCA5A5;
+            font-size: 12.5px;
+            font-weight: 700;
+            min-height: 18px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .success-text {
+            color: #6EE7B7;
+            font-size: 12.5px;
+            font-weight: 700;
+            min-height: 18px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .auth-card .mode-btn {
+            max-width: 100%;
+            margin-top: 2px;
+        }
+
+        /* Custom Modal Dialog */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: calc(100vw / 0.67);
+            height: calc(100dvh / 0.67);
+            z-index: 100;
+            background: rgba(28, 14, 6, 0.68);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px;
+        }
+
+        .modal-box {
+            width: 100%;
+            max-width: 390px;
+            max-height: 92dvh;
+            overflow-y: auto;
+            background: radial-gradient(circle at 35% 25%, #522D1D 0%, #341A0F 75%, #26120A 100%);
+            border: 2px solid #854D27;
+            border-radius: 24px;
+            padding: 20px 18px;
+            box-shadow: 0 24px 48px rgba(24, 10, 4, 0.58);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 12px;
+        }
+
+        /* Full-Screen Invite & Earn Pop-Up with Small Margin Around */
+        #invites-modal {
+            padding: 16px;
+        }
+
+        .modal-box.invites-fullscreen-box {
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            max-height: none;
+            border-radius: 26px;
+            padding: 22px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 14px;
+            border: 2px solid #A1622F;
+            box-shadow: 0 24px 54px rgba(15, 6, 2, 0.72);
+        }
+
+        .invites-fullscreen-content {
+            width: 100%;
+            max-width: 560px;
+            margin: 0 auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            overflow-y: auto;
+            padding-right: 2px;
+        }
+
+        .invites-fullscreen-content::-webkit-scrollbar {
+            width: 5px;
+        }
+        .invites-fullscreen-content::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 10px;
+        }
+        .invites-fullscreen-content::-webkit-scrollbar-thumb {
+            background: rgba(52, 211, 153, 0.45);
+            border-radius: 10px;
+        }
+
+        /* Invites & Referral Page/Modal Styles */
+        .invite-code-card {
+            width: 100%;
+            padding: 16px 16px 14px 16px;
+            border-radius: 18px;
+            background: rgba(18, 8, 4, 0.88);
+            border: 1.5px solid rgba(245, 158, 11, 0.35);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .invite-code-pill-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .invite-code-pill {
+            width: 100%;
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: 0.22em;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: rgba(34, 16, 8, 0.95);
+            border: 2px dashed #34D399;
+            color: #6EE7B7;
+            user-select: all;
+            transition: filter 0.25s ease, border-color 0.25s ease;
+        }
+
+        .invite-code-pill.code-locked {
+            border-color: rgba(248, 113, 113, 0.55);
+            color: rgba(254, 202, 202, 0.5);
+            filter: blur(5px);
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .code-lock-overlay-badge {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(20, 9, 4, 0.72);
+            border-radius: 14px;
+            border: 1.5px solid rgba(248, 113, 113, 0.55);
+            color: #FCA5A5;
+            font-size: 0.95rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.65);
+        }
+
+        .invite-share-row {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .invite-share-row button {
+            flex: 1;
+            padding: 12px 14px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: transform 0.15s ease, filter 0.15s ease, opacity 0.2s ease;
+        }
+
+        .invite-share-row button:active:not(:disabled) {
+            transform: scale(0.96);
+        }
+
+        .invite-share-row button:disabled {
+            opacity: 0.42;
+            cursor: not-allowed;
+        }
+
+        /* Unlock / Upgrade Banner inside Fullscreen Invite & Earn */
+        .unlock-earning-banner {
+            width: 100%;
+            padding: 15px 14px;
+            border-radius: 18px;
+            background: linear-gradient(145deg, rgba(38, 18, 8, 0.96) 0%, rgba(22, 10, 4, 0.98) 100%);
+            border: 1.5px solid rgba(251, 191, 36, 0.48);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: left;
+        }
+
+        .unlock-banner-title {
+            font-size: 0.98rem;
+            font-weight: 900;
+            color: #FDE047;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .unlock-banner-desc {
+            font-size: 0.84rem;
+            font-weight: 600;
+            color: rgba(254, 243, 199, 0.85);
+            line-height: 1.4;
+        }
+
+        .unlock-plan-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .unlock-plan-buttons button {
+            width: 100%;
+            max-width: 100%;
+            padding: 13px 16px;
+            font-size: 0.95rem;
+        }
+
+        .invites-list-section {
+            width: 100%;
+            flex: 1;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: left;
+        }
+
+        .invites-list-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #FDE68A;
+            padding: 0 2px;
+        }
+
+        .invites-list-box {
+            width: 100%;
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-right: 2px;
+        }
+
+        .invites-list-box::-webkit-scrollbar {
+            width: 4px;
+        }
+        .invites-list-box::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 10px;
+        }
+        .invites-list-box::-webkit-scrollbar-thumb {
+            background: rgba(52, 211, 153, 0.45);
+            border-radius: 10px;
+        }
+
+        .invited-friend-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 14px;
+            border-radius: 14px;
+            background: rgba(20, 9, 4, 0.85);
+            border: 1px solid rgba(245, 158, 11, 0.26);
+        }
+
+        .invited-friend-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .invited-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, #F59E0B 0%, #B45309 100%);
+            color: #1F0E06;
+            font-size: 14px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .invited-friend-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .invited-friend-name {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #FEF3C7;
+        }
+
+        .invited-friend-date {
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(254, 243, 199, 0.58);
+        }
+
+        .invited-bonus-tag {
+            padding: 5px 10px;
+            border-radius: 9999px;
+            background: rgba(16, 185, 129, 0.18);
+            border: 1px solid rgba(52, 211, 153, 0.42);
+            color: #6EE7B7;
+            font-size: 11.5px;
+            font-weight: 900;
+        }
+
+        .invites-empty-state {
+            padding: 24px 14px;
+            border-radius: 14px;
+            background: rgba(18, 8, 4, 0.65);
+            border: 1px dashed rgba(245, 158, 11, 0.28);
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+            color: rgba(254, 243, 199, 0.65);
+        }
+
+        /* Opponent Left Room Pop-up Styling */
+        .opponent-left-modal-box {
+            border: 2.5px solid #F59E0B;
+            box-shadow: 0 26px 54px rgba(0, 0, 0, 0.72), 0 0 34px rgba(245, 158, 11, 0.28);
+            padding: 26px 20px 22px 20px;
+            animation: winPopupBounce 0.32s cubic-bezier(0.34, 1.5, 0.64, 1) forwards;
+        }
+
+        .opponent-left-icon {
+            width: 62px;
+            height: 62px;
+            border-radius: 9999px;
+            background: rgba(245, 158, 11, 0.16);
+            border: 2px solid rgba(251, 191, 36, 0.55);
+            color: #FDE047;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+        }
+
+        /* Scrollable Pop-up Payment Widget Modal */
+        .modal-box.palpluss-widget-modal {
+            max-width: 440px;
+            max-height: 88dvh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+            padding: 14px;
+            border-color: #34D399;
+            background: radial-gradient(circle at 35% 20%, #3E2115 0%, #24120A 75%, #190C06 100%);
+            box-shadow: 0 28px 60px rgba(0, 0, 0, 0.78), 0 0 34px rgba(16, 185, 129, 0.25);
+            animation: winPopupBounce 0.28s cubic-bezier(0.34, 1.45, 0.64, 1) forwards;
+        }
+
+        .modal-box.palpluss-widget-modal::-webkit-scrollbar,
+        .palpluss-iframe-shell::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal-box.palpluss-widget-modal::-webkit-scrollbar-track,
+        .palpluss-iframe-shell::-webkit-scrollbar-track {
+            background: rgba(18, 8, 4, 0.6);
+            border-radius: 9999px;
+        }
+
+        .modal-box.palpluss-widget-modal::-webkit-scrollbar-thumb,
+        .palpluss-iframe-shell::-webkit-scrollbar-thumb {
+            background: rgba(52, 211, 153, 0.5);
+            border-radius: 9999px;
+        }
+
+        .modal-box.palpluss-widget-modal::-webkit-scrollbar-thumb:hover,
+        .palpluss-iframe-shell::-webkit-scrollbar-thumb:hover {
+            background: rgba(52, 211, 153, 0.8);
+        }
+
+        .palpluss-header-row {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 4px 4px 2px 6px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(36, 18, 10, 0.92);
+            backdrop-filter: blur(6px);
+            border-radius: 14px;
+        }
+
+        .palpluss-header-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            gap: 2px;
+        }
+
+        .palpluss-header-title {
+            font-size: 0.98rem;
+            font-weight: 900;
+            color: #FDE68A;
+            letter-spacing: 0.02em;
+        }
+
+        .palpluss-header-sub {
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: #6EE7B7;
+        }
+
+        .modal-close-x-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 9999px;
+            background: rgba(239, 68, 68, 0.16);
+            border: 1.5px solid rgba(248, 113, 113, 0.45);
+            color: #FCA5A5;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .modal-close-x-btn:hover {
+            background: rgba(239, 68, 68, 0.32);
+            border-color: #FCA5A5;
+            color: #FEF2F2;
+        }
+
+        .modal-close-x-btn:active {
+            transform: scale(0.92);
+        }
+
+        .modal-title {
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: #FDE68A;
+        }
+
+        .modal-desc {
+            margin: 0;
+            font-size: 0.86rem;
+            color: rgba(254, 243, 199, 0.85);
+            line-height: 1.4;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            margin-top: 4px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            padding: 12px 14px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            cursor: pointer;
+            border: 1.5px solid rgba(253, 230, 138, 0.28);
+        }
+
+        /* Palpluss Embedded Iframe Container (Scrollable) */
+        .palpluss-iframe-shell {
+            width: 100%;
+            max-height: 68dvh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            background: #FFFFFF;
+            border-radius: 16px;
+            border: 1.5px solid rgba(52, 211, 153, 0.45);
+        }
+
+        #palpluss-iframe {
+            width: 100%;
+            min-height: 520px;
+            border: none;
+            display: block;
+            background: #FFFFFF;
+        }
+
+        /* Celebratory Post-Payment Pop-up */
+        @keyframes paymentSparkleFloat {
+            0%, 100% {
+                transform: translateY(0) scale(1) rotate(0deg);
+                opacity: 0.9;
+            }
+            50% {
+                transform: translateY(-7px) scale(1.18) rotate(12deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes checkRingPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.55), 0 10px 26px rgba(16, 185, 129, 0.35);
+            }
+            70% {
+                box-shadow: 0 0 0 16px rgba(52, 211, 153, 0), 0 10px 26px rgba(16, 185, 129, 0.35);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(52, 211, 153, 0), 0 10px 26px rgba(16, 185, 129, 0.35);
+            }
+        }
+
+        .payment-success-modal-box {
+            position: relative;
+            overflow: hidden;
+            max-width: 390px;
+            padding: 26px 20px 22px 20px;
+            border: 2.5px solid #34D399;
+            background:
+                radial-gradient(circle at 50% 12%, rgba(16, 185, 129, 0.25) 0%, transparent 55%),
+                radial-gradient(circle at 35% 25%, #522D1D 0%, #341A0F 75%, #26120A 100%);
+            box-shadow: 0 28px 60px rgba(0, 0, 0, 0.78), 0 0 42px rgba(16, 185, 129, 0.38);
+            animation: winPopupBounce 0.36s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .sparkle-particle {
+            position: absolute;
+            pointer-events: none;
+            color: #FDE047;
+            animation: paymentSparkleFloat 2.2s infinite ease-in-out;
+        }
+
+        .sparkle-particle.sp-1 { top: 18px; left: 26px; animation-delay: 0s; color: #34D399; }
+        .sparkle-particle.sp-2 { top: 24px; right: 30px; animation-delay: 0.4s; color: #FDE047; }
+        .sparkle-particle.sp-3 { top: 76px; left: 18px; animation-delay: 0.8s; color: #F59E0B; }
+        .sparkle-particle.sp-4 { top: 72px; right: 20px; animation-delay: 1.2s; color: #6EE7B7; }
+
+        .payment-success-badge {
+            width: 68px;
+            height: 68px;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            border: 3px solid #A7F3D0;
+            color: #062118;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: checkRingPulse 1.9s infinite ease-out;
+        }
+
+        .payment-success-headline {
+            margin: 2px 0 0 0;
+            font-size: 1.65rem;
+            font-weight: 900;
+            letter-spacing: 0.03em;
+            color: #6EE7B7;
+            text-shadow: 0 3px 14px rgba(0, 0, 0, 0.65);
+        }
+
+        .payment-receipt-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 9999px;
+            background: rgba(16, 185, 129, 0.16);
+            border: 1px solid rgba(52, 211, 153, 0.45);
+            color: #A7F3D0;
+            font-size: 11.5px;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+        }
+
+        .payment-perks-card {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 16px;
+            background: rgba(18, 8, 4, 0.85);
+            border: 1.5px solid rgba(245, 158, 11, 0.35);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            text-align: left;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #FEF3C7;
+        }
+
+        .payment-perks-card div {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .perk-check {
+            color: #34D399;
+            font-weight: 900;
+        }
+
+        /* Donate Preset Pills */
+        .donate-presets-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            width: 100%;
+        }
+
+        .donate-preset-btn {
+            padding: 10px 4px;
+            border-radius: 12px;
+            background: rgba(20, 9, 4, 0.88);
+            border: 1.5px solid rgba(245, 158, 11, 0.35);
+            color: #FDE047;
+            font-size: 12px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .donate-preset-btn.selected,
+        .donate-preset-btn:hover {
+            background: rgba(225, 29, 72, 0.28);
+            border-color: #FB7185;
+            color: #FFF1F2;
+        }
+
+        /* Custom Round Outcome Pop-up */
+        @keyframes winPopupBounce {
+            0% { transform: scale(0.75); opacity: 0; }
+            70% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes shrinkCountdownBar {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+
+        .win-modal-box {
+            animation: winPopupBounce 0.34s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            border: 2.5px solid #34D399;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.72), 0 0 36px rgba(16, 185, 129, 0.35);
+            padding: 26px 20px;
+        }
+
+        .win-modal-box.lose-state {
+            border-color: #F87171;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.72), 0 0 36px rgba(239, 68, 68, 0.3);
+        }
+
+        .win-modal-box.draw-state {
+            border-color: #F59E0B;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.72), 0 0 36px rgba(245, 158, 11, 0.3);
+        }
+
+        .win-trophy-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 9999px;
+            background: rgba(16, 185, 129, 0.16);
+            border: 2px solid rgba(52, 211, 153, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #34D399;
+        }
+
+        .win-modal-box.lose-state .win-trophy-icon {
+            background: rgba(239, 68, 68, 0.16);
+            border-color: rgba(248, 113, 113, 0.5);
+            color: #FCA5A5;
+        }
+
+        .win-modal-box.draw-state .win-trophy-icon {
+            background: rgba(245, 158, 11, 0.16);
+            border-color: rgba(251, 191, 36, 0.5);
+            color: #FDE047;
+        }
+
+        .win-headline {
+            margin: 0;
+            font-size: 1.95rem;
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            color: #6EE7B7;
+            text-shadow: 0 3px 12px rgba(0, 0, 0, 0.6);
+        }
+
+        .win-modal-box.lose-state .win-headline {
+            color: #FCA5A5;
+        }
+
+        .win-modal-box.draw-state .win-headline {
+            color: #FDE047;
+        }
+
+        .next-game-progress-track {
+            width: 100%;
+            height: 6px;
+            border-radius: 9999px;
+            background: rgba(18, 8, 4, 0.85);
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .next-game-progress-fill {
+            height: 100%;
+            width: 100%;
+            border-radius: 9999px;
+            background: linear-gradient(90deg, #34D399 0%, #FDE047 100%);
+        }
+
+        .next-game-progress-fill.animate-bar {
+            animation: shrinkCountdownBar 3s linear forwards;
+        }
+
+        .room-code-display {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: 0.25em;
+            padding: 12px 20px;
+            border-radius: 16px;
+            background: rgba(22, 11, 7, 0.85);
+            border: 2px dashed #F59E0B;
+            color: #FDE047;
+            margin: 4px 0;
+            user-select: all;
+        }
+
+        .mp-host-actions-row {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .mp-host-actions-row button {
+            flex: 1;
+            padding: 10px 12px;
+            font-size: 0.88rem;
+        }
+
+        .status-pill {
+            font-size: 13px;
+            font-weight: 700;
+            color: #6EE7B7;
+            min-height: 18px;
+        }
+
+        /* 2-Column Piece Shape Shop Grid */
+        .shop-header-row {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .shop-header-right {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .shop-status-pill {
+            padding: 5px 11px;
+            border-radius: 9999px;
+            background: rgba(22, 11, 7, 0.85);
+            border: 1.5px solid rgba(52, 211, 153, 0.45);
+            color: #6EE7B7;
+            font-size: 11.5px;
+            font-weight: 900;
+        }
+
+        .skins-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            width: 100%;
+            max-height: 360px;
+            overflow-y: auto;
+            padding-right: 2px;
+        }
+
+        .skins-grid::-webkit-scrollbar {
+            width: 4px;
+        }
+        .skins-grid::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        .skins-grid::-webkit-scrollbar-thumb {
+            background: rgba(245, 158, 11, 0.45);
+            border-radius: 10px;
+        }
+
+        .skin-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 10px;
+            border-radius: 16px;
+            background: rgba(20, 9, 4, 0.82);
+            border: 1.5px solid rgba(245, 158, 11, 0.28);
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .skin-card.equipped {
+            border-color: #34D399;
+            background: rgba(16, 185, 129, 0.14);
+        }
+
+        .skin-preview-box {
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            --skin-main: #F59E0B;
+            --skin-light: #FDE68A;
+            --skin-accent: #DC2626;
+            --skin-trim: #991B1B;
+            filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.6));
+        }
+
+        .skin-preview-box svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .skin-name {
+            font-size: 12.5px;
+            font-weight: 800;
+            color: #FEF3C7;
+        }
+
+        .skin-action-btn {
+            width: 100%;
+            padding: 8px 8px;
+            border-radius: 10px;
+            border: none;
+            font-size: 11.5px;
+            font-weight: 900;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            transition: transform 0.14s ease, filter 0.15s ease;
+        }
+
+        .skin-action-btn:active:not(:disabled) {
+            transform: scale(0.95);
+        }
+
+        .skin-btn-equipped {
+            background: rgba(16, 185, 129, 0.22);
+            color: #6EE7B7;
+            border: 1px solid rgba(52, 211, 153, 0.45);
+            cursor: default;
+        }
+
+        .skin-btn-equip {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            color: #1F0E06;
+        }
+
+        .skin-btn-unlock {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: #062118;
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
+        }
+
+        /* Maximized Arena */
+        #arena {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .board-container {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            width: min(calc(95vw / 0.67), calc((100dvh / 0.67) - 68px), 880px);
+            height: min(calc(95vw / 0.67), calc((100dvh / 0.67) - 68px), 880px);
+            margin-top: 28px;
+            border-radius: 26px;
+            background: radial-gradient(circle at 35% 30%, #522D1D 0%, #341A0F 75%, #26120A 100%);
+            box-shadow: 
+                inset 0 2px 6px rgba(255, 225, 170, 0.18),
+                inset 0 -8px 18px rgba(0, 0, 0, 0.6),
+                0 18px 36px rgba(56, 26, 8, 0.42),
+                0 0 0 3px #6B3C26,
+                0 0 0 6px #2B150B;
+            flex-shrink: 0;
+        }
+
+        .board-line {
+            stroke: #D97706;
+            stroke-width: 5.5;
+            stroke-linecap: round;
+            opacity: 0.45;
+            transition: all 0.3s ease;
+        }
+
+        .board-line-inner {
+            stroke: #FCD34D;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            opacity: 0.5;
+        }
+
+        .win-line {
+            stroke: #34D399;
+            stroke-width: 9;
+            stroke-linecap: round;
+            filter: drop-shadow(0 0 10px rgba(52, 211, 153, 0.9));
+            stroke-dasharray: 400;
+            stroke-dashoffset: 400;
+            animation: drawWinLine 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes drawWinLine {
+            to { stroke-dashoffset: 0; }
+        }
+
+        @keyframes pulseRing {
+            0% { transform: scale(0.85); opacity: 0.9; }
+            50% { transform: scale(1.22); opacity: 0.35; }
+            100% { transform: scale(0.85); opacity: 0.9; }
+        }
+
+        .valid-target-ring {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: pulseRing 1.4s infinite ease-in-out;
+        }
+
+        @keyframes selectedNodeHalo {
+            0% { transform: scale(0.95); opacity: 0.95; }
+            50% { transform: scale(1.32); opacity: 0.45; }
+            100% { transform: scale(0.95); opacity: 0.95; }
+        }
+
+        .selected-node-ring {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: selectedNodeHalo 0.95s infinite ease-in-out;
+        }
+
+        /* Piece Styling & Team Colors */
+        .game-piece {
+            position: absolute;
+            width: 16%;
+            height: 16%;
+            transform: translate(-50%, -50%) scale(1);
+            transition: left 0.32s cubic-bezier(0.34, 1.45, 0.64, 1), 
+                        top 0.32s cubic-bezier(0.34, 1.45, 0.64, 1),
+                        transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        filter 0.22s ease;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+        }
+
+        .game-piece svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .game-piece.spawn-pop {
+            animation: pieceDrop 0.34s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes pieceDrop {
+            0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
+            70% { transform: translate(-50%, -50%) scale(1.12); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        .piece-p1 {
+            --skin-main: #F59E0B;
+            --skin-light: #FDE68A;
+            --skin-accent: #DC2626;
+            --skin-trim: #991B1B;
+            filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.6));
+        }
+
+        .piece-p2 {
+            --skin-main: #10B981;
+            --skin-light: #A7F3D0;
+            --skin-accent: #2563EB;
+            --skin-trim: #1E40AF;
+            filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.6));
+        }
+
+        @keyframes canMovePulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 3px rgba(254, 240, 138, 0.45));
+            }
+            50% {
+                transform: translate(-50%, -54%) scale(1.09);
+                filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 10px rgba(253, 224, 71, 0.85));
+            }
+        }
+
+        .game-piece.can-move:not(.selected) {
+            animation: canMovePulse 1.25s infinite ease-in-out;
+        }
+
+        @keyframes selectedPieceFloat {
+            0%, 100% {
+                transform: translate(-50%, -56%) scale(1.16);
+                filter: drop-shadow(0 12px 16px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 10px #FEF08A);
+            }
+            50% {
+                transform: translate(-50%, -66%) scale(1.26);
+                filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 18px #FDE047);
+            }
+        }
+
+        .game-piece.selected {
+            z-index: 30;
+            animation: selectedPieceFloat 0.85s infinite ease-in-out;
+        }
+
+        .game-piece.winner-piece {
+            transform: translate(-50%, -50%) scale(1.12);
+            filter: drop-shadow(0 0 12px rgba(52, 211, 153, 0.95));
+            z-index: 25;
+        }
+
+        .node-hotspot {
+            position: absolute;
+            width: 24%;
+            height: 24%;
+            transform: translate(-50%, -50%);
+            border-radius: 16px;
+            cursor: pointer;
+            z-index: 35;
+            touch-action: manipulation;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Back icon on top-left (only shown in game) -->
+    <button id="back-btn" class="circle-icon-btn hidden" type="button" aria-label="Back to Home" title="Home">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5"></path>
+            <path d="M12 19l-7-7 7-7"></path>
+        </svg>
+    </button>
+
+    <!-- User Badge on Home top-left -->
+    <div id="user-badge" class="hidden">
+        <span id="badge-nickname">PLAYER</span>
+        <span id="badge-vip-star" class="vip-star-badge hidden" title="Premium Skin Unlocked">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2z"/>
+            </svg>
+        </span>
+    </div>
+
+    <!-- Balance Pill with + Button on Home top-right (Clickable to open Fullscreen Invites Page) -->
+    <button id="balance-badge" class="hidden" type="button" aria-label="Balance and Invites" title="View Invites & Referral Code">
+        <span class="balance-amount-wrap">
+            <span id="home-balance-text">0 KSH</span>
+        </span>
+        <span class="balance-plus-circle">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+        </span>
+    </button>
+
+    <!-- Bottom-left Exit/Logout Icon on Home -->
+    <button id="logout-btn" class="circle-icon-btn hidden" type="button" aria-label="Log Out" title="Log Out">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+    </button>
+
+    <!-- Bottom-right Shop Icon on Home -->
+    <button id="shop-btn" class="circle-icon-btn hidden" type="button" aria-label="Shop" title="Piece Skins">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+    </button>
+
+    <!-- Score Box (top-right in game) -->
+    <div id="unified-score-box" class="hidden">
+        <div id="box-p1" class="score-half p1-half active-turn">
+            <span id="label-p1">You:</span>
+            <span id="wins-p1" class="win-count">0</span>
+        </div>
+        <span class="score-divider">|</span>
+        <div id="box-p2" class="score-half p2-half">
+            <span id="label-p2">Bot:</span>
+            <span id="wins-p2" class="win-count">0</span>
+        </div>
+    </div>
+
+    <!-- Register / Login Card Screen -->
+    <div id="auth-screen" class="full-overlay">
+        <div class="auth-card">
+            <h1 class="game-title">MAWE TATU</h1>
+            <div id="auth-toggle-track" class="auth-toggle-track">
+                <div class="auth-toggle-pill"></div>
+                <button id="tab-login" class="tab-btn active" type="button">Log In</button>
+                <button id="tab-register" class="tab-btn" type="button">Register</button>
+            </div>
+            <div class="input-group">
+                <label class="input-label" for="auth-nickname">Nickname (max 6 letters)</label>
+                <input id="auth-nickname" class="clean-input" type="text" maxlength="6" placeholder="e.g  beast" autocomplete="off" />
+            </div>
+            <div class="input-group">
+                <label class="input-label" for="auth-pin">Password (4 digits)</label>
+                <input id="auth-pin" class="clean-input" type="password" inputmode="numeric" maxlength="4" placeholder="1234" autocomplete="off" />
+            </div>
+
+            <!-- Register Plan & Optional Friend Invite Code -->
+            <div id="register-extra-fields" class="hidden" style="width:100%; display:flex; flex-direction:column; gap:10px;">
+                <div class="input-group">
+                    <label class="input-label">Choose Registration Plan</label>
+                    <div class="tier-plans-grid">
+                        <button id="plan-card-100" type="button" class="tier-plan-card selected-plan">
+                            <span class="tier-price-tag">100 KSH</span>
+                            <span class="tier-plan-title">Game + Earning Code</span>
+                            <span class="tier-plan-sub">Unlock your code &amp; earn +30 KSH per referral</span>
+                        </button>
+                        <button id="plan-card-150" type="button" class="tier-plan-card">
+                            <span class="tier-price-tag">150 KSH</span>
+                            <span class="tier-plan-title">Game Only (No Code)</span>
+                            <span class="tier-plan-sub">Full game access without earning invite code</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="register-invite-group" class="input-group">
+                    <label class="input-label" for="auth-invite-code">Friend's Invite Code (Optional)</label>
+                    <input id="auth-invite-code" class="clean-input" type="text" maxlength="8" placeholder="e.g  BEAST29" autocomplete="off" />
+                </div>
+            </div>
+
+            <div id="auth-error" class="error-text"></div>
+            <button id="auth-submit-btn" class="mode-btn btn-practice" type="button">Log In</button>
+        </div>
+    </div>
+
+    <!-- Home Screen -->
+    <div id="home-screen" class="full-overlay hidden">
+        <h1 class="game-title">MAWE TATU</h1>
+        <button id="btn-practice" class="mode-btn btn-practice" type="button">Practice</button>
+        <button id="btn-play-friends" class="mode-btn btn-friends" type="button">Play with friends</button>
+        <button id="btn-donate" class="mode-btn btn-donate" type="button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            <span>Donate</span>
+        </button>
+    </div>
+
+    <!-- Full-Screen Invite & Earn Pop-Up (Fills Screen with Small Space Around, No Redeem Section) -->
+    <div id="invites-modal" class="modal-backdrop hidden">
+        <div class="modal-box invites-fullscreen-box">
+            <div class="shop-header-row">
+                <h2 class="modal-title">Invite &amp; Earn</h2>
+                <div class="shop-header-right">
+                    <span id="invites-modal-balance" class="shop-status-pill">0 KSH</span>
+                    <button id="invites-close-x-btn" class="modal-close-x-btn" type="button" aria-label="Close Invites" title="Close">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="invites-fullscreen-content">
+                <p id="invites-subtitle-desc" class="modal-desc">
+                    Earn <strong>+30 KSH</strong> commission for every friend who registers and pays successfully using your code!
+                </p>
+
+                <!-- Personal Invite Code Card (Locked until user pays the 100 KSH Earning Plan) -->
+                <div class="invite-code-card">
+                    <span class="input-label" style="text-align:center; padding-left:0;">Your Invite Code</span>
+
+                    <div class="invite-code-pill-wrapper">
+                        <div id="personal-invite-code-text" class="invite-code-pill code-locked">------</div>
+                        <div id="invite-code-lock-badge" class="code-lock-overlay-badge">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            <span>CODE LOCKED</span>
+                        </div>
+                    </div>
+
+                    <div class="invite-share-row">
+                        <button id="btn-copy-invite-code" class="btn-secondary" type="button" disabled>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            <span id="copy-invite-label">Copy</span>
+                        </button>
+                        <button id="btn-share-invite-code" class="btn-practice" type="button" disabled>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="18" cy="5" r="3"></circle>
+                                <circle cx="6" cy="12" r="3"></circle>
+                                <circle cx="18" cy="19" r="3"></circle>
+                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                            </svg>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Unlock Options Banner (Shown when code is locked / unpaid) -->
+                <div id="unlock-earning-banner" class="unlock-earning-banner">
+                    <div class="unlock-banner-title">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        <span id="unlock-banner-heading">Activate Your Account</span>
+                    </div>
+                    <div id="unlock-banner-copy" class="unlock-banner-desc">
+                        Choose <strong>100 KSH</strong> to get the game + unlock your personal invite code and earn <strong>+30 KSH</strong> per successful referral, or <strong>150 KSH</strong> for game access only (no invite code).
+                    </div>
+                    <div class="unlock-plan-buttons">
+                        <button id="btn-pay-unlock-100" class="mode-btn btn-practice" type="button">
+                            Pay 100 KSH — Game + Unlock Earning Code
+                        </button>
+                        <button id="btn-pay-gameonly-150" class="mode-btn btn-friends" type="button">
+                            Pay 150 KSH — Game Access Only (No Code)
+                        </button>
+                    </div>
+                </div>
+
+                <div id="invite-share-feedback" class="status-pill"></div>
+
+                <!-- List of All Invited Friends -->
+                <div class="invites-list-section">
+                    <div class="invites-list-header">
+                        <span>Invited Friends (+30 KSH Each)</span>
+                        <span id="invited-count-pill">0 INVITED</span>
+                    </div>
+                    <div id="invited-friends-list" class="invites-list-box"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Donate Modal -->
+    <div id="donate-modal" class="modal-backdrop hidden">
+        <div class="modal-box">
+            <h2 class="modal-title">Support MAWE TATU</h2>
+            <p class="modal-desc">Choose or enter an amount in KES to donate via M-PESA:</p>
+
+            <div class="donate-presets-grid">
+                <button type="button" class="donate-preset-btn" data-amount="20">20 KSH</button>
+                <button type="button" class="donate-preset-btn selected" data-amount="50">50 KSH</button>
+                <button type="button" class="donate-preset-btn" data-amount="100">100 KSH</button>
+                <button type="button" class="donate-preset-btn" data-amount="250">250 KSH</button>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label" for="donate-amount-input">Donation Amount (KSH)</label>
+                <input id="donate-amount-input" class="clean-input" type="number" min="1" max="100000" value="50" />
+            </div>
+
+            <div id="donate-feedback" class="error-text"></div>
+
+            <div class="modal-actions">
+                <button id="donate-close-btn" class="btn-secondary" type="button">Cancel</button>
+                <button id="donate-proceed-btn" class="btn-donate" type="button">Continue to Donate</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 1 of Palpluss Payment: Custom M-PESA Phone Number Popup -->
+    <div id="mpesa-phone-modal" class="modal-backdrop hidden">
+        <div class="modal-box">
+            <h2 id="mpesa-modal-title" class="modal-title">Enter M-PESA Number</h2>
+            <p id="mpesa-modal-subtitle" class="modal-desc">
+                Amount to pay: <strong>100 KSH</strong>.
+            </p>
+
+            <div class="input-group">
+                <label class="input-label" for="mpesa-phone-input">Kenyan M-PESA Number</label>
+                <input id="mpesa-phone-input" class="clean-input" type="tel" inputmode="tel" maxlength="13" placeholder="0712345678" autocomplete="tel" />
+            </div>
+
+            <div id="mpesa-phone-error" class="error-text"></div>
+
+            <div class="modal-actions">
+                <button id="mpesa-phone-cancel-btn" class="btn-secondary" type="button">Cancel</button>
+                <button id="mpesa-phone-continue-btn" class="btn-practice" type="button">Proceed to Pay</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 2 of Palpluss Payment: Scrollable Pop-up Payment Widget with Top-Right X -->
+    <div id="palpluss-modal" class="modal-backdrop hidden">
+        <div class="modal-box palpluss-widget-modal">
+            <div class="palpluss-header-row">
+                <div class="palpluss-header-meta">
+                    <span id="palpluss-purpose-label" class="palpluss-header-title">MAWE TATU Checkout</span>
+                    <span id="palpluss-locked-info" class="palpluss-header-sub">100 KSH • 0712345678</span>
+                </div>
+                <button id="palpluss-close-x-btn" class="modal-close-x-btn" type="button" aria-label="Cancel Payment" title="Cancel">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="palpluss-iframe-shell">
+                <iframe
+                    id="palpluss-iframe"
+                    src="about:blank"
+                    scrolling="yes"
+                    allow="payment"
+                    title="Palpluss M-PESA Checkout"
+                ></iframe>
+            </div>
+
+            <div id="palpluss-status-text" class="status-pill">Complete the M-PESA prompt above...</div>
+        </div>
+    </div>
+
+    <!-- Celebratory Post-Payment Pop-up -->
+    <div id="payment-success-modal" class="modal-backdrop hidden">
+        <div class="modal-box payment-success-modal-box">
+            <!-- Decorative Floating Sparkles -->
+            <svg class="sparkle-particle sp-1" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2z"/>
+            </svg>
+            <svg class="sparkle-particle sp-2" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2z"/>
+            </svg>
+            <svg class="sparkle-particle sp-3" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="12" cy="12" r="6"/>
+            </svg>
+            <svg class="sparkle-particle sp-4" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2z"/>
+            </svg>
+
+            <div class="payment-success-badge">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+
+            <h2 id="payment-success-title" class="payment-success-headline">ASANTE SANA!</h2>
+
+            <div id="payment-success-ref" class="payment-receipt-pill">M-PESA • CONFIRMED</div>
+
+            <p id="payment-success-desc" class="modal-desc">
+                Your transaction has been verified successfully.
+            </p>
+
+            <div id="payment-success-perks" class="payment-perks-card"></div>
+
+            <div class="modal-actions" style="margin-top:6px;">
+                <button id="payment-success-action-btn" class="btn-practice" type="button">Continue Playing</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Multiplayer 4-Character Room Code Modal -->
+    <div id="mp-modal" class="modal-backdrop hidden">
+        <div class="modal-box">
+            <div class="shop-header-row">
+                <h2 class="modal-title">Play with Friends</h2>
+                <span class="shop-status-pill">FREE</span>
+            </div>
+
+            <!-- Segmented Toggle Track (Create Room vs Join Room) -->
+            <div id="mp-toggle-track" class="auth-toggle-track">
+                <div class="auth-toggle-pill"></div>
+                <button id="tab-create-room" class="tab-btn active" type="button">Create Room</button>
+                <button id="tab-join-room" class="tab-btn" type="button">Join Room</button>
+            </div>
+
+            <!-- Create Room View (Auto-creates and persists across toggles) -->
+            <div id="mp-host-view" style="width:100%; display:flex; flex-direction:column; align-items:center; gap:10px;">
+                <p class="modal-desc">Share this 4-character code with your friend:</p>
+                <div id="host-code-text" class="room-code-display">----</div>
+                <div class="mp-host-actions-row">
+                    <button id="btn-copy-host-code" class="mode-btn btn-secondary" type="button">Copy Code</button>
+                    <button id="btn-new-host-code" class="mode-btn btn-secondary" type="button">New Code</button>
+                </div>
+                <div id="mp-host-status" class="status-pill">Creating room code...</div>
+            </div>
+
+            <!-- Join Room View -->
+            <div id="mp-join-view" class="hidden" style="width:100%; display:flex; flex-direction:column; gap:10px; align-items:center;">
+                <p class="modal-desc">Enter your friend's 4-character room code:</p>
+                <input id="join-code-input" class="clean-input" type="text" maxlength="4" placeholder="ABCD" autocomplete="off" />
+                <button id="btn-join-room" class="mode-btn btn-practice" style="max-width:100%;" type="button">Join Friend</button>
+                <div id="mp-join-status" class="status-pill"></div>
+            </div>
+
+            <div class="modal-actions">
+                <button id="mp-close-btn" class="btn-secondary" type="button">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Piece Skins Shop Modal -->
+    <div id="shop-modal" class="modal-backdrop hidden">
+        <div class="modal-box">
+            <div class="shop-header-row">
+                <h2 class="modal-title">Piece Skins</h2>
+                <div class="shop-header-right">
+                    <span id="shop-badge-status" class="shop-status-pill">1/6 OWNED</span>
+                    <button id="shop-close-x-btn" class="modal-close-x-btn" type="button" aria-label="Close Shop" title="Close">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div id="skins-grid" class="skins-grid"></div>
+        </div>
+    </div>
+
+    <!-- Custom Confirmation Popup -->
+    <div id="confirm-modal" class="modal-backdrop hidden">
+        <div class="modal-box">
+            <h2 id="confirm-title" class="modal-title">Are you sure?</h2>
+            <p id="confirm-message" class="modal-desc">Do you really want to do this?</p>
+            <div class="modal-actions">
+                <button id="confirm-no-btn" class="btn-secondary" type="button">No, Stay</button>
+                <button id="confirm-yes-btn" class="btn-danger" type="button">Yes, Sure</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Opponent Left Multiplayer Room Popup -->
+    <div id="opponent-left-modal" class="modal-backdrop hidden">
+        <div class="modal-box opponent-left-modal-box">
+            <div class="opponent-left-icon">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+            </div>
+            <h2 id="opponent-left-title" class="modal-title">Opponent Left the Room</h2>
+            <p id="opponent-left-message" class="modal-desc">Opponent left the room.</p>
+            <div class="modal-actions">
+                <button id="opponent-left-ok-btn" class="btn-friends" type="button">Back to Home</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Round Win/Outcome Auto-Next Pop-up (Delayed 0.47s, Runs 3 Seconds) -->
+    <div id="round-end-modal" class="modal-backdrop hidden">
+        <div id="round-end-box" class="modal-box win-modal-box">
+            <div id="round-end-icon" class="win-trophy-icon">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                    <path d="M4 22h16"></path>
+                    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                </svg>
+            </div>
+            <h2 id="round-end-title" class="win-headline">YOU WIN!</h2>
+            <p id="round-end-countdown" class="modal-desc">Next game in 3s...</p>
+            <div class="next-game-progress-track">
+                <div id="next-game-progress-bar" class="next-game-progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Arena -->
+    <div id="arena">
+        <div id="board-wrapper" class="board-container">
+            <svg id="achi-svg" viewBox="0 0 300 300" style="position:absolute; inset:0; width:100%; height:100%; z-index:10;">
+                <defs>
+                    <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#FDE047" stop-opacity="0.7"/>
+                        <stop offset="100%" stop-color="#F59E0B" stop-opacity="0"/>
+                    </radialGradient>
+                </defs>
+
+                <rect x="14" y="14" width="272" height="272" rx="18" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="6 6" opacity="0.28"/>
+                <rect x="22" y="22" width="256" height="256" rx="14" fill="none" stroke="#B45309" stroke-width="1" opacity="0.4"/>
+
+                <line x1="52" y1="52"  x2="248" y2="52"  class="board-line"/>
+                <line x1="52" y1="52"  x2="248" y2="52"  class="board-line-inner"/>
+
+                <line x1="52" y1="150" x2="248" y2="150" class="board-line"/>
+                <line x1="52" y1="150" x2="248" y2="150" class="board-line-inner"/>
+
+                <line x1="52" y1="248" x2="248" y2="248" class="board-line"/>
+                <line x1="52" y1="248" x2="248" y2="248" class="board-line-inner"/>
+
+                <line x1="52"  y1="52" x2="52"  y2="248" class="board-line"/>
+                <line x1="52"  y1="52" x2="52"  y2="248" class="board-line-inner"/>
+
+                <line x1="150" y1="52" x2="150" y2="248" class="board-line"/>
+                <line x1="150" y1="52" x2="150" y2="248" class="board-line-inner"/>
+
+                <line x1="248" y1="52" x2="248" y2="248" class="board-line"/>
+                <line x1="248" y1="52" x2="248" y2="248" class="board-line-inner"/>
+
+                <line x1="52"  y1="52" x2="248" y2="248" class="board-line"/>
+                <line x1="52"  y1="52" x2="248" y2="248" class="board-line-inner"/>
+
+                <line x1="248" y1="52" x2="52"  y2="248" class="board-line"/>
+                <line x1="248" y1="52" x2="52"  y2="248" class="board-line-inner"/>
+
+                <circle cx="150" cy="150" r="22" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.4"/>
+
+                <g id="svg-nodes-layer"></g>
+                <g id="svg-win-layer"></g>
+            </svg>
+
+            <div id="board-pieces-layer" style="position:absolute; inset:0; width:100%; height:100%; z-index:20;"></div>
+        </div>
+    </div>
+
+<script>
+// =========================================================================
+// PALPLUSS PAYLINK, TWO-TIER PLANS & COMMISSION CONFIGURATION
+// =========================================================================
+const PALPLUSS_PAYLINK_ID = '1fbb7b69-ac0e-4439-a08d-40bfd9ee13de';
+const PALPLUSS_ORIGIN = 'https://link.palpluss.com';
+const SKIN_PRICE_KSH = 30;
+const PLAN_CODE_EARN_KSH = 100;   // Game + Invite Code to continue earning +30 KSH per referral
+const PLAN_GAME_ONLY_KSH = 150;   // Game only without earning invite code
+const INVITE_COMMISSION_KSH = 30; // +30 KSH commission per successful payment
+
+const PIECES_PER_PLAYER = 3;
+const POPUP_DELAY_MS = 470;
+const PEER_PREFIX = 'mawetatu-1v1-v2-';
+
+const NODE_COORDS = [
+    { x: 52,  y: 52  }, // 0
+    { x: 150, y: 52  }, // 1
+    { x: 248, y: 52  }, // 2
+    { x: 52,  y: 150 }, // 3
+    { x: 150, y: 150 }, // 4
+    { x: 248, y: 150 }, // 5
+    { x: 52,  y: 248 }, // 6
+    { x: 150, y: 248 }, // 7
+    { x: 248, y: 248 }  // 8
+];
+
+const ADJACENCY = {
+    0: [1, 3, 4],
+    1: [0, 2, 4],
+    2: [1, 4, 5],
+    3: [0, 4, 6],
+    4: [0, 1, 2, 3, 5, 6, 7, 8],
+    5: [2, 4, 8],
+    6: [3, 4, 7],
+    7: [4, 6, 8],
+    8: [4, 5, 7]
+};
+
+const WIN_LINES = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
+];
+
+// =========================================================================
+// PIECE SKINS CATALOG (6 SHAPES — ALL LOCKED SKINS ARE 30 KSH)
+// =========================================================================
+const SKINS = [
+    {
+        id: 'circle',
+        name: 'Kente Orb',
+        price: 0,
+        svg: `<svg viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="20" fill="var(--skin-main)" stroke="var(--skin-trim)" stroke-width="3.5"/>
+            <circle cx="24" cy="24" r="10.5" fill="var(--skin-accent)" stroke="var(--skin-light)" stroke-width="2" stroke-dasharray="4 3"/>
+        </svg>`
+    },
+    {
+        id: 'square',
+        name: 'Adinkra Square',
+        price: SKIN_PRICE_KSH,
+        svg: `<svg viewBox="0 0 48 48">
+            <rect x="6" y="6" width="36" height="36" rx="7" fill="var(--skin-main)" stroke="var(--skin-trim)" stroke-width="3.5"/>
+            <rect x="15" y="15" width="18" height="18" rx="3" fill="var(--skin-accent)" stroke="var(--skin-light)" stroke-width="2"/>
+        </svg>`
+    },
+    {
+        id: 'diamond',
+        name: 'Gold Diamond',
+        price: SKIN_PRICE_KSH,
+        svg: `<svg viewBox="0 0 48 48">
+            <polygon points="24,3 45,24 24,45 3,24" fill="var(--skin-main)" stroke="var(--skin-trim)" stroke-width="3.2" stroke-linejoin="round"/>
+            <polygon points="24,13 35,24 24,35 13,24" fill="var(--skin-accent)" stroke="var(--skin-light)" stroke-width="1.8"/>
+        </svg>`
+    },
+    {
+        id: 'star',
+        name: 'Ashanti Star',
+        price: SKIN_PRICE_KSH,
+        svg: `<svg viewBox="0 0 48 48">
+            <polygon points="24,3 30.2,16.2 44.5,18.3 34.2,28.3 36.7,42.5 24,35.8 11.3,42.5 13.8,28.3 3.5,18.3 17.8,16.2" fill="var(--skin-main)" stroke="var(--skin-trim)" stroke-width="3" stroke-linejoin="round"/>
+            <circle cx="24" cy="25" r="5.5" fill="var(--skin-light)"/>
+        </svg>`
+    },
+    {
+        id: 'hexagon',
+        name: 'Kente Hex',
+        price: SKIN_PRICE_KSH,
+        svg: `<svg viewBox="0 0 48 48">
+            <polygon points="24,3 42,13.5 42,34.5 24,45 6,34.5 6,13.5" fill="var(--skin-main)" stroke="var(--skin-trim)" stroke-width="3.2" stroke-linejoin="round"/>
+            <circle cx="24" cy="24" r="7" fill="var(--skin-light)"/>
+        </svg>`
+    },
+    {
+        id: 'crown',
+        name: 'Chief Crown',
+        price: SKIN_PRICE_KSH,
+        svg: `<svg viewBox="0 0 48 48">
+            <polygon points="5,37 9,14 18,24 24,9 30,24 39,14 43,37" fill="var(--skin-main)" stroke="var(--skin-trim)" stroke-width="3.2" stroke-linejoin="round"/>
+            <circle cx="24" cy="30" r="4" fill="var(--skin-light)"/>
+        </svg>`
+    }
+];
+
+const state = {
+    currentUser: null,
+    selectedRegPlan: 'code100', // 'code100' (100 KSH with earning code) | 'game150' (150 KSH game only, no code)
+    mode: 'practice',
+    myPlayerNum: 1,
+    opponentName: 'Bot',
+    opponentSkin: 'circle',
+    roomCode: null,
+    hostPeer: null,
+    hostRoomCode: null,
+    hostRoomReady: false,
+    mpTab: 'create',
+    peer: null,
+    conn: null,
+    opponentLeftShown: false,
+    board: Array(9).fill(0),
+    pieces: [],
+    phase: 'DROP',
+    turn: 1,
+    startingPlayer: 1,
+    p1Placed: 0,
+    p2Placed: 0,
+    selectedNode: null,
+    remoteSelectedNode: null,
+    aiThinking: false,
+    aiTimers: [],
+    popupDelayTimer: null,
+    nextRoundTimer: null,
+    nextRoundInterval: null,
+    winningLine: null,
+    wins: { 1: 0, 2: 0 },
+    lastInputTime: 0,
+    pendingPayment: null
+};
+
+// Elements
+const authScreenEl = document.getElementById('auth-screen');
+const authToggleTrackEl = document.getElementById('auth-toggle-track');
+const tabLoginEl = document.getElementById('tab-login');
+const tabRegisterEl = document.getElementById('tab-register');
+const authNicknameEl = document.getElementById('auth-nickname');
+const authPinEl = document.getElementById('auth-pin');
+const registerExtraFieldsEl = document.getElementById('register-extra-fields');
+const planCard100El = document.getElementById('plan-card-100');
+const planCard150El = document.getElementById('plan-card-150');
+const registerInviteGroupEl = document.getElementById('register-invite-group');
+const authInviteCodeEl = document.getElementById('auth-invite-code');
+const authErrorEl = document.getElementById('auth-error');
+const authSubmitBtnEl = document.getElementById('auth-submit-btn');
+
+const homeScreenEl = document.getElementById('home-screen');
+const userBadgeEl = document.getElementById('user-badge');
+const badgeNicknameEl = document.getElementById('badge-nickname');
+const badgeVipStarEl = document.getElementById('badge-vip-star');
+const balanceBadgeEl = document.getElementById('balance-badge');
+const homeBalanceTextEl = document.getElementById('home-balance-text');
+const backBtnEl = document.getElementById('back-btn');
+const logoutBtnEl = document.getElementById('logout-btn');
+const shopBtnEl = document.getElementById('shop-btn');
+const scoreBoxEl = document.getElementById('unified-score-box');
+
+const btnPracticeEl = document.getElementById('btn-practice');
+const btnPlayFriendsEl = document.getElementById('btn-play-friends');
+const btnDonateEl = document.getElementById('btn-donate');
+
+// Fullscreen Invites & Referral Modal Elements
+const invitesModalEl = document.getElementById('invites-modal');
+const invitesCloseXBtnEl = document.getElementById('invites-close-x-btn');
+const invitesModalBalanceEl = document.getElementById('invites-modal-balance');
+const invitesSubtitleDescEl = document.getElementById('invites-subtitle-desc');
+const personalInviteCodeTextEl = document.getElementById('personal-invite-code-text');
+const inviteCodeLockBadgeEl = document.getElementById('invite-code-lock-badge');
+const btnCopyInviteCodeEl = document.getElementById('btn-copy-invite-code');
+const copyInviteLabelEl = document.getElementById('copy-invite-label');
+const btnShareInviteCodeEl = document.getElementById('btn-share-invite-code');
+const inviteShareFeedbackEl = document.getElementById('invite-share-feedback');
+const unlockEarningBannerEl = document.getElementById('unlock-earning-banner');
+const unlockBannerHeadingEl = document.getElementById('unlock-banner-heading');
+const unlockBannerCopyEl = document.getElementById('unlock-banner-copy');
+const btnPayUnlock100El = document.getElementById('btn-pay-unlock-100');
+const btnPayGameOnly150El = document.getElementById('btn-pay-gameonly-150');
+const invitedCountPillEl = document.getElementById('invited-count-pill');
+const invitedFriendsListEl = document.getElementById('invited-friends-list');
+
+// Donate Modal Elements
+const donateModalEl = document.getElementById('donate-modal');
+const donateAmountInputEl = document.getElementById('donate-amount-input');
+const donateFeedbackEl = document.getElementById('donate-feedback');
+const donateCloseBtnEl = document.getElementById('donate-close-btn');
+const donateProceedBtnEl = document.getElementById('donate-proceed-btn');
+
+// M-PESA Phone Prompt & Palpluss Widget Elements
+const mpesaPhoneModalEl = document.getElementById('mpesa-phone-modal');
+const mpesaModalTitleEl = document.getElementById('mpesa-modal-title');
+const mpesaModalSubtitleEl = document.getElementById('mpesa-modal-subtitle');
+const mpesaPhoneInputEl = document.getElementById('mpesa-phone-input');
+const mpesaPhoneErrorEl = document.getElementById('mpesa-phone-error');
+const mpesaPhoneCancelBtnEl = document.getElementById('mpesa-phone-cancel-btn');
+const mpesaPhoneContinueBtnEl = document.getElementById('mpesa-phone-continue-btn');
+
+const palplussModalEl = document.getElementById('palpluss-modal');
+const palplussPurposeLabelEl = document.getElementById('palpluss-purpose-label');
+const palplussLockedInfoEl = document.getElementById('palpluss-locked-info');
+const palplussIframeEl = document.getElementById('palpluss-iframe');
+const palplussStatusTextEl = document.getElementById('palpluss-status-text');
+const palplussCloseXBtnEl = document.getElementById('palpluss-close-x-btn');
+
+// Celebratory Post-Payment Pop-up Elements
+const paymentSuccessModalEl = document.getElementById('payment-success-modal');
+const paymentSuccessTitleEl = document.getElementById('payment-success-title');
+const paymentSuccessRefEl = document.getElementById('payment-success-ref');
+const paymentSuccessDescEl = document.getElementById('payment-success-desc');
+const paymentSuccessPerksEl = document.getElementById('payment-success-perks');
+const paymentSuccessActionBtnEl = document.getElementById('payment-success-action-btn');
+
+// Multiplayer Modal Elements
+const mpModalEl = document.getElementById('mp-modal');
+const mpToggleTrackEl = document.getElementById('mp-toggle-track');
+const tabCreateRoomEl = document.getElementById('tab-create-room');
+const tabJoinRoomEl = document.getElementById('tab-join-room');
+const mpHostViewEl = document.getElementById('mp-host-view');
+const mpJoinViewEl = document.getElementById('mp-join-view');
+const hostCodeTextEl = document.getElementById('host-code-text');
+const btnCopyHostCodeEl = document.getElementById('btn-copy-host-code');
+const btnNewHostCodeEl = document.getElementById('btn-new-host-code');
+const mpHostStatusEl = document.getElementById('mp-host-status');
+const joinCodeInputEl = document.getElementById('join-code-input');
+const btnJoinRoomEl = document.getElementById('btn-join-room');
+const mpJoinStatusEl = document.getElementById('mp-join-status');
+const mpCloseBtnEl = document.getElementById('mp-close-btn');
+
+// Shop Modal Elements
+const shopModalEl = document.getElementById('shop-modal');
+const shopBadgeStatusEl = document.getElementById('shop-badge-status');
+const skinsGridEl = document.getElementById('skins-grid');
+const shopCloseXBtnEl = document.getElementById('shop-close-x-btn');
+
+const confirmModalEl = document.getElementById('confirm-modal');
+const confirmTitleEl = document.getElementById('confirm-title');
+const confirmMessageEl = document.getElementById('confirm-message');
+const confirmYesBtnEl = document.getElementById('confirm-yes-btn');
+const confirmNoBtnEl = document.getElementById('confirm-no-btn');
+
+// Opponent Left Room Modal Elements
+const opponentLeftModalEl = document.getElementById('opponent-left-modal');
+const opponentLeftTitleEl = document.getElementById('opponent-left-title');
+const opponentLeftMessageEl = document.getElementById('opponent-left-message');
+const opponentLeftOkBtnEl = document.getElementById('opponent-left-ok-btn');
+
+const roundEndModalEl = document.getElementById('round-end-modal');
+const roundEndBoxEl = document.getElementById('round-end-box');
+const roundEndTitleEl = document.getElementById('round-end-title');
+const roundEndCountdownEl = document.getElementById('round-end-countdown');
+const nextGameProgressBarEl = document.getElementById('next-game-progress-bar');
+
+const labelP1El = document.getElementById('label-p1');
+const labelP2El = document.getElementById('label-p2');
+const svgNodesLayer = document.getElementById('svg-nodes-layer');
+const svgWinLayer = document.getElementById('svg-win-layer');
+const boardPiecesLayer = document.getElementById('board-pieces-layer');
+const winsP1El = document.getElementById('wins-p1');
+const winsP2El = document.getElementById('wins-p2');
+const boxP1El = document.getElementById('box-p1');
+const boxP2El = document.getElementById('box-p2');
+
+const tt = new Map();
+let authMode = 'login';
+let pendingConfirmAction = null;
+
+// =========================================================================
+// CUSTOM CONFIRMATION POPUP
+// =========================================================================
+function askConfirmation(title, message, onYes) {
+    confirmTitleEl.textContent = title;
+    confirmMessageEl.textContent = message;
+    pendingConfirmAction = onYes;
+    confirmModalEl.classList.remove('hidden');
+}
+
+confirmNoBtnEl.addEventListener('click', () => {
+    confirmModalEl.classList.add('hidden');
+    pendingConfirmAction = null;
+});
+
+confirmYesBtnEl.addEventListener('click', () => {
+    confirmModalEl.classList.add('hidden');
+    if (typeof pendingConfirmAction === 'function') {
+        const fn = pendingConfirmAction;
+        pendingConfirmAction = null;
+        fn();
+    }
+});
+
+// =========================================================================
+// CUSTOM OPPONENT LEFT MULTIPLAYER ROOM POPUP
+// =========================================================================
+function showOpponentLeftPopup() {
+    if (state.opponentLeftShown) return;
+    state.opponentLeftShown = true;
+
+    clearNextRoundTimers();
+    confirmModalEl.classList.add('hidden');
+    pendingConfirmAction = null;
+
+    const oppName = (state.opponentName || '').trim();
+    const hasCustomName = oppName && oppName.toLowerCase() !== 'friend' && oppName.toLowerCase() !== 'bot';
+
+    opponentLeftTitleEl.textContent = 'Opponent Left the Room';
+    opponentLeftMessageEl.textContent = hasCustomName
+        ? `${oppName} left the room.`
+        : 'Opponent left the room.';
+
+    cleanupNetwork(false, true);
+    opponentLeftModalEl.classList.remove('hidden');
+}
+
+opponentLeftOkBtnEl.addEventListener('click', () => {
+    opponentLeftModalEl.classList.add('hidden');
+    state.opponentLeftShown = false;
+    cleanupNetwork(false, true);
+    showHomeUI();
+});
+
+// =========================================================================
+// CUSTOM WIN / OUTCOME POPUP (0.47s DELAY) & 3-SECOND AUTO-ADVANCE
+// =========================================================================
+function clearNextRoundTimers() {
+    if (state.popupDelayTimer) {
+        clearTimeout(state.popupDelayTimer);
+        state.popupDelayTimer = null;
+    }
+    if (state.nextRoundTimer) {
+        clearTimeout(state.nextRoundTimer);
+        state.nextRoundTimer = null;
+    }
+    if (state.nextRoundInterval) {
+        clearInterval(state.nextRoundInterval);
+        state.nextRoundInterval = null;
+    }
+    roundEndModalEl.classList.add('hidden');
+    nextGameProgressBarEl.classList.remove('animate-bar');
+}
+
+function scheduleRoundEndPopup(winner) {
+    clearNextRoundTimers();
+    state.popupDelayTimer = setTimeout(() => {
+        state.popupDelayTimer = null;
+        if (state.phase === 'GAMEOVER') {
+            showRoundEndPopup(winner);
+        }
+    }, POPUP_DELAY_MS);
+}
+
+function showRoundEndPopup(winner) {
+    const localPlayerWon = (state.mode === 'practice' && winner === 1) ||
+                           (state.mode === 'online' && winner === state.myPlayerNum);
+
+    roundEndBoxEl.classList.remove('lose-state', 'draw-state');
+
+    if (winner === 0) {
+        roundEndBoxEl.classList.add('draw-state');
+        roundEndTitleEl.textContent = 'DRAW!';
+    } else if (localPlayerWon) {
+        roundEndTitleEl.textContent = 'YOU WIN!';
+    } else {
+        roundEndBoxEl.classList.add('lose-state');
+        roundEndTitleEl.textContent = 'YOU LOSE!';
+    }
+
+    let secondsLeft = 3;
+    roundEndCountdownEl.textContent = `Next game in ${secondsLeft}s...`;
+
+    nextGameProgressBarEl.classList.remove('animate-bar');
+    void nextGameProgressBarEl.offsetWidth;
+    nextGameProgressBarEl.classList.add('animate-bar');
+
+    roundEndModalEl.classList.remove('hidden');
+
+    state.nextRoundInterval = setInterval(() => {
+        secondsLeft -= 1;
+        if (secondsLeft > 0) {
+            roundEndCountdownEl.textContent = `Next game in ${secondsLeft}s...`;
+        }
+    }, 1000);
+
+    state.nextRoundTimer = setTimeout(() => {
+        clearNextRoundTimers();
+        if (state.phase === 'GAMEOVER') {
+            if (state.mode === 'online') {
+                if (state.myPlayerNum === 1) {
+                    resetBoard(true, false);
+                }
+            } else {
+                resetBoard(true, false);
+            }
+        }
+    }, 3000);
+}
+
+// =========================================================================
+// AUTHENTICATION, TWO-TIER PLANS (100 KSH vs 150 KSH), BALANCE & INVITES
+// =========================================================================
+function getUsersDB() {
+    try {
+        return JSON.parse(localStorage.getItem('mawe_tatu_users') || '{}');
+    } catch {
+        return {};
+    }
+}
+
+function saveUsersDB(db) {
+    localStorage.setItem('mawe_tatu_users', JSON.stringify(db));
+}
+
+function createInviteCodeForUser(nickname, existingDB = {}) {
+    const usedCodes = new Set(
+        Object.values(existingDB)
+            .map(u => (u && u.inviteCode ? u.inviteCode.toUpperCase() : ''))
+            .filter(Boolean)
+    );
+    const base = (nickname || 'MT').replace(/[^A-Z]/g, '').slice(0, 4).padEnd(2, 'X');
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    for (let attempt = 0; attempt < 40; attempt++) {
+        let suffix = '';
+        for (let i = 0; i < 3; i++) {
+            suffix += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        const candidate = `${base}${suffix}`;
+        if (!usedCodes.has(candidate)) return candidate;
+    }
+    return `${base}${Math.floor(100 + Math.random() * 899)}`;
+}
+
+function persistCurrentUser() {
+    if (!state.currentUser) return;
+    const db = getUsersDB();
+    db[state.currentUser.nickname] = {
+        pin: state.currentUser.pin,
+        ownedSkins: state.currentUser.ownedSkins,
+        equippedSkin: state.currentUser.equippedSkin,
+        savedMpesaPhone: state.currentUser.savedMpesaPhone || '',
+        balance: Number(state.currentUser.balance) || 0,
+        inviteCode: state.currentUser.inviteCode,
+        invitedFriends: Array.isArray(state.currentUser.invitedFriends) ? state.currentUser.invitedFriends : [],
+        hasPaid: Boolean(state.currentUser.hasPaid),
+        codeUnlocked: Boolean(state.currentUser.codeUnlocked),
+        pendingReferrerNick: state.currentUser.pendingReferrerNick || '',
+        commissionPaidToReferrer: Boolean(state.currentUser.commissionPaidToReferrer)
+    };
+    saveUsersDB(db);
+    updateSkinsUIState();
+    updateBalanceUI();
+}
+
+function updateBalanceUI() {
+    const bal = state.currentUser ? (Number(state.currentUser.balance) || 0) : 0;
+    homeBalanceTextEl.textContent = `${bal} KSH`;
+    invitesModalBalanceEl.textContent = `${bal} KSH`;
+}
+
+function updateSkinsUIState() {
+    const user = state.currentUser;
+    if (!user) return;
+
+    const ownedCount = Array.isArray(user.ownedSkins) ? user.ownedSkins.length : 1;
+    shopBadgeStatusEl.textContent = `${ownedCount}/${SKINS.length} OWNED`;
+
+    if (ownedCount > 1) {
+        badgeVipStarEl.classList.remove('hidden');
+    } else {
+        badgeVipStarEl.classList.add('hidden');
+    }
+}
+
+function getEquippedSkin() {
+    return state.currentUser && state.currentUser.equippedSkin ? state.currentUser.equippedSkin : 'circle';
+}
+
+function getSkinSVG(skinId) {
+    const found = SKINS.find(s => s.id === skinId);
+    return found ? found.svg : SKINS[0].svg;
+}
+
+function getSkinForPlayer(playerNum) {
+    if (state.mode === 'online') {
+        return playerNum === state.myPlayerNum ? getEquippedSkin() : (state.opponentSkin || 'circle');
+    }
+    return playerNum === 1 ? getEquippedSkin() : 'circle';
+}
+
+authNicknameEl.addEventListener('input', () => {
+    authNicknameEl.value = authNicknameEl.value.replace(/[^a-zA-Z]/g, '').toUpperCase().slice(0, 6);
+});
+
+authPinEl.addEventListener('input', () => {
+    authPinEl.value = authPinEl.value.replace(/\D/g, '').slice(0, 4);
+});
+
+authInviteCodeEl.addEventListener('input', () => {
+    authInviteCodeEl.value = authInviteCodeEl.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 8);
+});
+
+function selectRegistrationPlan(plan) {
+    state.selectedRegPlan = plan;
+    if (plan === 'code100') {
+        planCard100El.classList.add('selected-plan');
+        planCard150El.classList.remove('selected-plan-amber');
+        registerInviteGroupEl.classList.remove('hidden');
+        if (authMode === 'register') {
+            authSubmitBtnEl.textContent = 'Register & Pay 100 KSH';
+            authSubmitBtnEl.className = 'mode-btn btn-practice';
+        }
+    } else {
+        planCard100El.classList.remove('selected-plan');
+        planCard150El.classList.add('selected-plan-amber');
+        registerInviteGroupEl.classList.add('hidden');
+        if (authMode === 'register') {
+            authSubmitBtnEl.textContent = 'Register & Pay 150 KSH';
+            authSubmitBtnEl.className = 'mode-btn btn-friends';
+        }
+    }
+}
+
+planCard100El.addEventListener('click', () => selectRegistrationPlan('code100'));
+planCard150El.addEventListener('click', () => selectRegistrationPlan('game150'));
+
+tabLoginEl.addEventListener('click', () => {
+    authMode = 'login';
+    authToggleTrackEl.classList.remove('register-active');
+    tabLoginEl.classList.add('active');
+    tabRegisterEl.classList.remove('active');
+    registerExtraFieldsEl.classList.add('hidden');
+    authSubmitBtnEl.textContent = 'Log In';
+    authSubmitBtnEl.className = 'mode-btn btn-practice';
+    authErrorEl.textContent = '';
+});
+
+tabRegisterEl.addEventListener('click', () => {
+    authMode = 'register';
+    authToggleTrackEl.classList.add('register-active');
+    tabRegisterEl.classList.add('active');
+    tabLoginEl.classList.remove('active');
+    registerExtraFieldsEl.classList.remove('hidden');
+    selectRegistrationPlan(state.selectedRegPlan || 'code100');
+    authErrorEl.textContent = '';
+});
+
+authSubmitBtnEl.addEventListener('click', () => {
+    const nick = authNicknameEl.value.trim().toUpperCase();
+    const pin = authPinEl.value.trim();
+
+    if (!/^[A-Z]{1,6}$/.test(nick)) {
+        authErrorEl.textContent = 'Nickname must be 1 to 6 letters only.';
+        return;
+    }
+    if (!/^\d{4}$/.test(pin)) {
+        authErrorEl.textContent = 'Password must be exactly 4 digits.';
+        return;
+    }
+
+    const db = getUsersDB();
+
+    if (authMode === 'register') {
+        if (db[nick]) {
+            authErrorEl.textContent = 'Nickname already registered. Toggle to Log In.';
+            return;
+        }
+
+        let referrerNick = '';
+        if (state.selectedRegPlan === 'code100') {
+            const enteredInvite = authInviteCodeEl.value.trim().toUpperCase();
+            if (enteredInvite) {
+                const inviterEntry = Object.entries(db).find(
+                    ([, u]) => u && u.codeUnlocked && u.inviteCode === enteredInvite
+                );
+                if (!inviterEntry) {
+                    authErrorEl.textContent = 'Invalid or locked invite code. Leave blank or check code.';
+                    return;
+                }
+                referrerNick = inviterEntry[0];
+            }
+        }
+
+        const newUserRecord = {
+            nickname: nick,
+            pin,
+            ownedSkins: ['circle'],
+            equippedSkin: 'circle',
+            savedMpesaPhone: '',
+            balance: 0,
+            inviteCode: createInviteCodeForUser(nick, db),
+            invitedFriends: [],
+            hasPaid: false,
+            codeUnlocked: false,
+            pendingReferrerNick: referrerNick,
+            commissionPaidToReferrer: false
+        };
+
+        db[nick] = newUserRecord;
+        saveUsersDB(db);
+        loginSuccess(nick, db[nick]);
+
+        // Immediately launch Palpluss M-PESA checkout for the selected plan (100 KSH or 150 KSH)
+        if (state.selectedRegPlan === 'code100') {
+            startPalplussPaymentFlow('plan_code_100', PLAN_CODE_EARN_KSH, null);
+        } else {
+            startPalplussPaymentFlow('plan_game_150', PLAN_GAME_ONLY_KSH, null);
+        }
+    } else {
+        if (!db[nick]) {
+            authErrorEl.textContent = 'Account not found. Toggle to Register.';
+            return;
+        }
+        if (db[nick].pin !== pin) {
+            authErrorEl.textContent = 'Incorrect 4-digit password.';
+            return;
+        }
+        loginSuccess(nick, db[nick]);
+    }
+});
+
+function loginSuccess(nick, userData) {
+    const db = getUsersDB();
+    const validSkinIds = new Set(SKINS.map(s => s.id));
+    let owned = Array.isArray(userData.ownedSkins) && userData.ownedSkins.length > 0
+        ? userData.ownedSkins.filter(id => validSkinIds.has(id))
+        : ['circle'];
+    if (!owned.includes('circle')) owned.unshift('circle');
+
+    const equipped = validSkinIds.has(userData.equippedSkin) && owned.includes(userData.equippedSkin)
+        ? userData.equippedSkin
+        : 'circle';
+
+    const inviteCode = userData.inviteCode || createInviteCodeForUser(nick, db);
+
+    state.currentUser = {
+        nickname: nick,
+        pin: userData.pin,
+        ownedSkins: owned,
+        equippedSkin: equipped,
+        savedMpesaPhone: userData.savedMpesaPhone || '',
+        balance: Number(userData.balance) || 0,
+        inviteCode,
+        invitedFriends: Array.isArray(userData.invitedFriends) ? userData.invitedFriends : [],
+        hasPaid: Boolean(userData.hasPaid),
+        codeUnlocked: Boolean(userData.codeUnlocked),
+        pendingReferrerNick: userData.pendingReferrerNick || '',
+        commissionPaidToReferrer: Boolean(userData.commissionPaidToReferrer)
+    };
+
+    persistCurrentUser();
+    localStorage.setItem('mawe_tatu_session', nick);
+    badgeNicknameEl.textContent = nick;
+    authNicknameEl.value = '';
+    authPinEl.value = '';
+    authInviteCodeEl.value = '';
+    authErrorEl.textContent = '';
+    showHomeUI();
+}
+
+function logoutUser() {
+    cleanupNetwork(true, true);
+    clearAITimers();
+    clearNextRoundTimers();
+    opponentLeftModalEl.classList.add('hidden');
+    invitesModalEl.classList.add('hidden');
+    state.opponentLeftShown = false;
+    state.currentUser = null;
+    localStorage.removeItem('mawe_tatu_session');
+    authScreenEl.classList.remove('hidden');
+    homeScreenEl.classList.add('hidden');
+    userBadgeEl.classList.add('hidden');
+    balanceBadgeEl.classList.add('hidden');
+    logoutBtnEl.classList.add('hidden');
+    shopBtnEl.classList.add('hidden');
+    backBtnEl.classList.add('hidden');
+    scoreBoxEl.classList.add('hidden');
+}
+
+function syncCurrentUserFromDB() {
+    if (!state.currentUser) return;
+    const db = getUsersDB();
+    const fresh = db[state.currentUser.nickname];
+    if (fresh) {
+        if (Array.isArray(fresh.ownedSkins)) {
+            const validSkinIds = new Set(SKINS.map(s => s.id));
+            const owned = fresh.ownedSkins.filter(id => validSkinIds.has(id));
+            if (!owned.includes('circle')) owned.unshift('circle');
+            state.currentUser.ownedSkins = owned;
+            if (fresh.equippedSkin && owned.includes(fresh.equippedSkin)) {
+                state.currentUser.equippedSkin = fresh.equippedSkin;
+            }
+        }
+        state.currentUser.balance = Number(fresh.balance) || 0;
+        if (fresh.inviteCode) state.currentUser.inviteCode = fresh.inviteCode;
+        state.currentUser.invitedFriends = Array.isArray(fresh.invitedFriends) ? fresh.invitedFriends : [];
+        state.currentUser.hasPaid = Boolean(fresh.hasPaid);
+        state.currentUser.codeUnlocked = Boolean(fresh.codeUnlocked);
+        state.currentUser.pendingReferrerNick = fresh.pendingReferrerNick || '';
+        state.currentUser.commissionPaidToReferrer = Boolean(fresh.commissionPaidToReferrer);
+    }
+    updateSkinsUIState();
+    updateBalanceUI();
+}
+
+function showHomeUI() {
+    clearAITimers();
+    clearNextRoundTimers();
+    syncCurrentUserFromDB();
+    state.mode = 'practice';
+    state.opponentLeftShown = false;
+    opponentLeftModalEl.classList.add('hidden');
+    authScreenEl.classList.add('hidden');
+    homeScreenEl.classList.remove('hidden');
+    userBadgeEl.classList.remove('hidden');
+    balanceBadgeEl.classList.remove('hidden');
+    logoutBtnEl.classList.remove('hidden');
+    shopBtnEl.classList.remove('hidden');
+    backBtnEl.classList.add('hidden');
+    scoreBoxEl.classList.add('hidden');
+}
+
+function showGameUI() {
+    authScreenEl.classList.add('hidden');
+    homeScreenEl.classList.add('hidden');
+    userBadgeEl.classList.add('hidden');
+    balanceBadgeEl.classList.add('hidden');
+    logoutBtnEl.classList.add('hidden');
+    shopBtnEl.classList.add('hidden');
+    backBtnEl.classList.remove('hidden');
+    scoreBoxEl.classList.remove('hidden');
+}
+
+// =========================================================================
+// FULL-SCREEN INVITE & EARN POP-UP (LOCKED CODE IF UNPAID, +30 KSH COMMISSION)
+// =========================================================================
+function renderInvitesModal() {
+    syncCurrentUserFromDB();
+    const user = state.currentUser;
+    if (!user) return;
+
+    updateBalanceUI();
+
+    const isCodeUnlocked = Boolean(user.hasPaid && user.codeUnlocked);
+    const hasPaidGameOnly = Boolean(user.hasPaid && !user.codeUnlocked);
+
+    if (isCodeUnlocked) {
+        personalInviteCodeTextEl.textContent = user.inviteCode || '------';
+        personalInviteCodeTextEl.classList.remove('code-locked');
+        inviteCodeLockBadgeEl.classList.add('hidden');
+        btnCopyInviteCodeEl.disabled = false;
+        btnShareInviteCodeEl.disabled = false;
+        unlockEarningBannerEl.classList.add('hidden');
+        invitesSubtitleDescEl.innerHTML = `Your invite code is active! Earn <strong>+${INVITE_COMMISSION_KSH} KSH</strong> commission for every friend who registers and pays successfully.`;
+    } else {
+        // Locked code state when user has not paid for the 100 KSH earning plan
+        personalInviteCodeTextEl.textContent = '••••••';
+        personalInviteCodeTextEl.classList.add('code-locked');
+        inviteCodeLockBadgeEl.classList.remove('hidden');
+        btnCopyInviteCodeEl.disabled = true;
+        btnShareInviteCodeEl.disabled = true;
+        unlockEarningBannerEl.classList.remove('hidden');
+
+        if (hasPaidGameOnly) {
+            invitesSubtitleDescEl.innerHTML = `You currently have <strong>Game Access Only (150 KSH)</strong>. Your invite code is locked.`;
+            unlockBannerHeadingEl.textContent = 'Unlock Your Invite Code to Earn';
+            unlockBannerCopyEl.innerHTML = `Pay <strong>100 KSH</strong> to unlock your personal invite code and start earning <strong>+${INVITE_COMMISSION_KSH} KSH</strong> commission per successful payment.`;
+            btnPayUnlock100El.textContent = 'Pay 100 KSH — Unlock Earning Code';
+            btnPayGameOnly150El.classList.add('hidden');
+        } else {
+            invitesSubtitleDescEl.innerHTML = `Your invite code is currently <strong>LOCKED</strong> until payment is completed.`;
+            unlockBannerHeadingEl.textContent = 'Activate Game & Earning Code';
+            unlockBannerCopyEl.innerHTML = `Choose <strong>100 KSH</strong> to unlock the game + your invite code and earn <strong>+${INVITE_COMMISSION_KSH} KSH</strong> per successful referral, or <strong>150 KSH</strong> for game access only (no code).`;
+            btnPayUnlock100El.textContent = 'Pay 100 KSH — Game + Unlock Earning Code';
+            btnPayGameOnly150El.classList.remove('hidden');
+        }
+    }
+
+    const invited = Array.isArray(user.invitedFriends) ? user.invitedFriends : [];
+    invitedCountPillEl.textContent = `${invited.length} INVITED`;
+    invitedFriendsListEl.innerHTML = '';
+
+    if (invited.length === 0) {
+        const emptyEl = document.createElement('div');
+        emptyEl.className = 'invites-empty-state';
+        emptyEl.textContent = isCodeUnlocked
+            ? `No friends invited yet. Copy or share your code above to earn +${INVITE_COMMISSION_KSH} KSH per successful payment!`
+            : `Unlock your invite code above to start inviting friends and earning +${INVITE_COMMISSION_KSH} KSH per successful payment!`;
+        invitedFriendsListEl.appendChild(emptyEl);
+    } else {
+        invited.slice().reverse().forEach(entry => {
+            const row = document.createElement('div');
+            row.className = 'invited-friend-row';
+
+            const friendNick = (entry && entry.nickname) ? entry.nickname : 'PLAYER';
+            const joinedDate = (entry && entry.date) ? entry.date : 'Paid';
+            const bonus = (entry && typeof entry.bonus === 'number') ? entry.bonus : INVITE_COMMISSION_KSH;
+
+            row.innerHTML = `
+                <div class="invited-friend-info">
+                    <div class="invited-avatar">${friendNick.charAt(0)}</div>
+                    <div class="invited-friend-meta">
+                        <span class="invited-friend-name">${friendNick}</span>
+                        <span class="invited-friend-date">${joinedDate}</span>
+                    </div>
+                </div>
+                <span class="invited-bonus-tag">+${bonus} KSH</span>
+            `;
+            invitedFriendsListEl.appendChild(row);
+        });
+    }
+}
+
+function openInvitesFullscreenModal(noticeMsg = '') {
+    inviteShareFeedbackEl.className = noticeMsg ? 'error-text' : 'status-pill';
+    inviteShareFeedbackEl.textContent = noticeMsg;
+    renderInvitesModal();
+    invitesModalEl.classList.remove('hidden');
+}
+
+balanceBadgeEl.addEventListener('click', () => {
+    openInvitesFullscreenModal('');
+});
+
+invitesCloseXBtnEl.addEventListener('click', () => {
+    invitesModalEl.classList.add('hidden');
+});
+
+invitesModalEl.addEventListener('click', (e) => {
+    if (e.target === invitesModalEl) {
+        invitesModalEl.classList.add('hidden');
+    }
+});
+
+btnPayUnlock100El.addEventListener('click', () => {
+    invitesModalEl.classList.add('hidden');
+    startPalplussPaymentFlow('plan_code_100', PLAN_CODE_EARN_KSH, null);
+});
+
+btnPayGameOnly150El.addEventListener('click', () => {
+    invitesModalEl.classList.add('hidden');
+    startPalplussPaymentFlow('plan_game_150', PLAN_GAME_ONLY_KSH, null);
+});
+
+function copyTextFallback(text) {
+    const temp = document.createElement('textarea');
+    temp.value = text;
+    temp.setAttribute('readonly', '');
+    temp.style.position = 'fixed';
+    temp.style.opacity = '0';
+    document.body.appendChild(temp);
+    temp.select();
+    document.execCommand('copy');
+    document.body.removeChild(temp);
+}
+
+btnCopyInviteCodeEl.addEventListener('click', () => {
+    if (!state.currentUser || !state.currentUser.hasPaid || !state.currentUser.codeUnlocked) return;
+    const code = state.currentUser.inviteCode;
+    copyTextFallback(code);
+    copyInviteLabelEl.textContent = '✓ Copied!';
+    inviteShareFeedbackEl.className = 'status-pill';
+    inviteShareFeedbackEl.textContent = `Invite code ${code} copied!`;
+    setTimeout(() => {
+        copyInviteLabelEl.textContent = 'Copy';
+    }, 1600);
+});
+
+btnShareInviteCodeEl.addEventListener('click', async () => {
+    if (!state.currentUser || !state.currentUser.hasPaid || !state.currentUser.codeUnlocked) return;
+    const code = state.currentUser.inviteCode;
+    const shareMessage = `Join me on MAWE TATU! Register with my invite code ${code} for the 100 KSH earning plan!`;
+    const shareUrl = window.location.href;
+
+    if (navigator.share) {
+        try {
+            await navigator.share({
+                title: 'MAWE TATU Invite',
+                text: shareMessage,
+                url: shareUrl
+            });
+            inviteShareFeedbackEl.className = 'status-pill';
+            inviteShareFeedbackEl.textContent = 'Invite shared!';
+            return;
+        } catch (err) {
+            if (err && err.name === 'AbortError') return;
+        }
+    }
+
+    copyTextFallback(`${shareMessage} ${shareUrl}`);
+    inviteShareFeedbackEl.className = 'status-pill';
+    inviteShareFeedbackEl.textContent = 'Invite link & code copied to share!';
+});
+
+// =========================================================================
+// PALPLUSS IFRAME PAYMENT WIDGET FLOW (100 KSH, 150 KSH, SKINS 30 KSH, DONATE)
+// =========================================================================
+function normalizeKenyanPhone(raw) {
+    const cleaned = (raw || '').replace(/[\s\-()]/g, '');
+    if (/^0[17]\d{8}$/.test(cleaned)) {
+        return cleaned;
+    }
+    if (/^\+?254[17]\d{8}$/.test(cleaned)) {
+        return cleaned.startsWith('+') ? cleaned.slice(1) : cleaned;
+    }
+    return null;
+}
+
+function buildPalplussEmbedUrl({ amount, phone, customerName }) {
+    const params = new URLSearchParams();
+    params.set('embed', '1');
+    params.set('amount', String(Math.max(1, Math.floor(amount))));
+    if (phone) params.set('phone', phone);
+    if (customerName) params.set('customer_name', customerName.slice(0, 120));
+    params.set('lock', '1');
+    return `${PALPLUSS_ORIGIN}/${encodeURIComponent(PALPLUSS_PAYLINK_ID)}?${params.toString()}`;
+}
+
+function startPalplussPaymentFlow(purpose, amount, skinObj = null) {
+    const validAmount = Math.max(1, Math.floor(Number(amount)));
+    state.pendingPayment = {
+        purpose,
+        amount: validAmount,
+        skin: skinObj,
+        phone: ''
+    };
+
+    mpesaModalTitleEl.textContent = 'Enter M-PESA Number';
+
+    if (purpose === 'donate') {
+        mpesaModalSubtitleEl.innerHTML = `Donating <strong>${validAmount} KSH</strong> to support <strong>MAWE TATU</strong>.`;
+        mpesaPhoneContinueBtnEl.textContent = 'Continue to Donate';
+        mpesaPhoneContinueBtnEl.className = 'btn-donate';
+    } else if (purpose === 'plan_code_100') {
+        mpesaModalSubtitleEl.innerHTML = `Paying <strong>100 KSH</strong> for <strong>Game + Earning Invite Code (+30 KSH/referral)</strong>.`;
+        mpesaPhoneContinueBtnEl.textContent = 'Proceed to Pay 100 KSH';
+        mpesaPhoneContinueBtnEl.className = 'btn-practice';
+    } else if (purpose === 'plan_game_150') {
+        mpesaModalSubtitleEl.innerHTML = `Paying <strong>150 KSH</strong> for <strong>MAWE TATU Game Access (No Invite Code)</strong>.`;
+        mpesaPhoneContinueBtnEl.textContent = 'Proceed to Pay 150 KSH';
+        mpesaPhoneContinueBtnEl.className = 'btn-friends';
+    } else {
+        const itemDesc = skinObj ? `${skinObj.name} Skin` : 'MAWE TATU';
+        mpesaModalSubtitleEl.innerHTML = `Paying <strong>${validAmount} KSH</strong> for <strong>${itemDesc}</strong>.`;
+        mpesaPhoneContinueBtnEl.textContent = 'Proceed to Pay';
+        mpesaPhoneContinueBtnEl.className = 'btn-practice';
+    }
+
+    mpesaPhoneInputEl.value = (state.currentUser && state.currentUser.savedMpesaPhone) ? state.currentUser.savedMpesaPhone : '';
+    mpesaPhoneErrorEl.textContent = '';
+    mpesaPhoneModalEl.classList.remove('hidden');
+    setTimeout(() => mpesaPhoneInputEl.focus(), 60);
+}
+
+mpesaPhoneInputEl.addEventListener('input', () => {
+    mpesaPhoneInputEl.value = mpesaPhoneInputEl.value.replace(/[^\d+]/g, '').slice(0, 13);
+});
+
+mpesaPhoneInputEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        mpesaPhoneContinueBtnEl.click();
+    }
+});
+
+mpesaPhoneCancelBtnEl.addEventListener('click', () => {
+    mpesaPhoneModalEl.classList.add('hidden');
+    state.pendingPayment = null;
+});
+
+mpesaPhoneContinueBtnEl.addEventListener('click', () => {
+    const validPhone = normalizeKenyanPhone(mpesaPhoneInputEl.value);
+    if (!validPhone) {
+        mpesaPhoneErrorEl.textContent = 'Enter a valid Kenyan M-PESA number (e.g. 0712345678 or 254712345678).';
+        return;
+    }
+
+    if (!state.pendingPayment) return;
+    state.pendingPayment.phone = validPhone;
+
+    if (state.currentUser) {
+        state.currentUser.savedMpesaPhone = validPhone;
+        persistCurrentUser();
+    }
+
+    mpesaPhoneModalEl.classList.add('hidden');
+    openPalplussIframeModal();
+});
+
+function openPalplussIframeModal() {
+    const p = state.pendingPayment;
+    if (!p) return;
+
+    const nick = state.currentUser ? state.currentUser.nickname : 'PLAYER';
+    let titleLabel = 'MAWE TATU Checkout';
+    let note = `MAWE TATU - ${nick}`;
+
+    if (p.purpose === 'skin' && p.skin) {
+        titleLabel = `Unlock ${p.skin.name}`;
+        note = `MAWE TATU Skin (${p.skin.name}) - ${nick}`;
+    } else if (p.purpose === 'plan_code_100') {
+        titleLabel = 'Game + Earning Code (100 KSH)';
+        note = `MAWE TATU 100 KSH Code Plan - ${nick}`;
+    } else if (p.purpose === 'plan_game_150') {
+        titleLabel = 'Game Access Only (150 KSH)';
+        note = `MAWE TATU 150 KSH Game Plan - ${nick}`;
+    } else if (p.purpose === 'donate') {
+        titleLabel = 'MAWE TATU Donation';
+        note = `MAWE TATU Donation - ${nick}`;
+    }
+
+    palplussPurposeLabelEl.textContent = titleLabel;
+    palplussLockedInfoEl.textContent = `${p.amount} KSH • ${p.phone}`;
+    palplussStatusTextEl.className = 'status-pill';
+    palplussStatusTextEl.textContent = 'Complete the M-PESA prompt above...';
+
+    palplussIframeEl.style.height = '540px';
+    palplussIframeEl.src = buildPalplussEmbedUrl({
+        amount: p.amount,
+        phone: p.phone,
+        customerName: note
+    });
+
+    palplussModalEl.classList.remove('hidden');
+    const modalBox = palplussModalEl.querySelector('.palpluss-widget-modal');
+    if (modalBox) modalBox.scrollTop = 0;
+}
+
+function closePalplussIframeModal() {
+    palplussModalEl.classList.add('hidden');
+    palplussIframeEl.src = 'about:blank';
+}
+
+function creditReferrerOnSuccessfulPayment() {
+    const user = state.currentUser;
+    if (!user || !user.pendingReferrerNick || user.commissionPaidToReferrer) return;
+
+    const db = getUsersDB();
+    const inviterData = db[user.pendingReferrerNick];
+    if (inviterData && inviterData.codeUnlocked) {
+        const todayLabel = new Date().toLocaleDateString('en-KE', { month: 'short', day: 'numeric', year: 'numeric' });
+        const inviterList = Array.isArray(inviterData.invitedFriends) ? inviterData.invitedFriends : [];
+        if (!inviterList.some(item => item.nickname === user.nickname)) {
+            inviterList.push({
+                nickname: user.nickname,
+                date: todayLabel,
+                bonus: INVITE_COMMISSION_KSH
+            });
+        }
+        inviterData.invitedFriends = inviterList;
+        inviterData.balance = (Number(inviterData.balance) || 0) + INVITE_COMMISSION_KSH;
+        db[user.pendingReferrerNick] = inviterData;
+        saveUsersDB(db);
+    }
+
+    user.commissionPaidToReferrer = true;
+    persistCurrentUser();
+}
+
+function showCelebratoryPaymentPopup({ purpose, amount, skin, txId }) {
+    const refText = txId ? `M-PESA • REF ${txId}` : `M-PESA • ${amount} KSH PAID`;
+    paymentSuccessRefEl.textContent = refText;
+
+    if (purpose === 'plan_code_100') {
+        const myCode = state.currentUser ? state.currentUser.inviteCode : '';
+        paymentSuccessTitleEl.textContent = 'CODE UNLOCKED!';
+        paymentSuccessDescEl.innerHTML = `Your game access and personal invite code <strong>${myCode}</strong> are now unlocked!`;
+        paymentSuccessPerksEl.innerHTML = `
+            <div><span class="perk-check">★</span><span>Invite Code: <strong>${myCode}</strong> (Active)</span></div>
+            <div><span class="perk-check">✓</span><span>Commission: <strong>+${INVITE_COMMISSION_KSH} KSH</strong> per successful referral</span></div>
+        `;
+        paymentSuccessActionBtnEl.textContent = 'Start Playing & Earning';
+    } else if (purpose === 'plan_game_150') {
+        paymentSuccessTitleEl.textContent = 'GAME UNLOCKED!';
+        paymentSuccessDescEl.innerHTML = `Full access to <strong>MAWE TATU</strong> (Practice &amp; Multiplayer) is now unlocked!`;
+        paymentSuccessPerksEl.innerHTML = `
+            <div><span class="perk-check">✓</span><span>Plan: <strong>Game Access Only (150 KSH)</strong></span></div>
+            <div><span class="perk-check">★</span><span>Practice vs Bot &amp; Play with Friends Unlocked</span></div>
+        `;
+        paymentSuccessActionBtnEl.textContent = 'Start Playing';
+    } else if (purpose === 'skin' && skin) {
+        paymentSuccessTitleEl.textContent = 'SKIN UNLOCKED!';
+        paymentSuccessDescEl.innerHTML = `<strong>${skin.name}</strong> has been unlocked and automatically equipped to your pieces!`;
+        paymentSuccessPerksEl.innerHTML = `
+            <div><span class="perk-check">★</span><span>Unlocked Skin: <strong>${skin.name}</strong></span></div>
+            <div><span class="perk-check">✓</span><span>Status: <strong>Equipped &amp; Ready</strong></span></div>
+        `;
+        paymentSuccessActionBtnEl.textContent = 'Awesome!';
+    } else {
+        paymentSuccessTitleEl.textContent = 'ASANTE SANA!';
+        paymentSuccessDescEl.innerHTML = `Thank you for supporting <strong>MAWE TATU</strong> with your generous <strong>${amount} KSH</strong> contribution!`;
+        paymentSuccessPerksEl.innerHTML = `
+            <div><span class="perk-check">♥</span><span>Contribution Received: <strong>${amount} KSH</strong></span></div>
+            <div><span class="perk-check">✓</span><span>Your support keeps MAWE TATU free &amp; growing</span></div>
+        `;
+        paymentSuccessActionBtnEl.textContent = 'Continue Playing';
+    }
+
+    paymentSuccessModalEl.classList.remove('hidden');
+}
+
+paymentSuccessActionBtnEl.addEventListener('click', () => {
+    paymentSuccessModalEl.classList.add('hidden');
+});
+
+function handleConfirmedPalplussPayment(txData = {}) {
+    const p = state.pendingPayment;
+    if (!p) return;
+
+    closePalplussIframeModal();
+
+    if (state.currentUser) {
+        if (p.purpose === 'plan_code_100') {
+            state.currentUser.hasPaid = true;
+            state.currentUser.codeUnlocked = true;
+            persistCurrentUser();
+            creditReferrerOnSuccessfulPayment();
+            renderInvitesModal();
+        } else if (p.purpose === 'plan_game_150') {
+            state.currentUser.hasPaid = true;
+            persistCurrentUser();
+            creditReferrerOnSuccessfulPayment();
+            renderInvitesModal();
+        } else if (p.purpose === 'skin' && p.skin) {
+            if (!state.currentUser.ownedSkins.includes(p.skin.id)) {
+                state.currentUser.ownedSkins.push(p.skin.id);
+            }
+            state.currentUser.equippedSkin = p.skin.id;
+            persistCurrentUser();
+            sendNet({ type: 'SKIN', skin: p.skin.id });
+            renderSkinShop();
+            renderAll();
+        }
+    }
+
+    const completedPayment = { ...p };
+    state.pendingPayment = null;
+
+    showCelebratoryPaymentPopup({
+        purpose: completedPayment.purpose,
+        amount: completedPayment.amount,
+        skin: completedPayment.skin,
+        txId: txData.txId || ''
+    });
+}
+
+// Top-right "X" button cancels/dismisses the payment widget
+palplussCloseXBtnEl.addEventListener('click', () => {
+    closePalplussIframeModal();
+    state.pendingPayment = null;
+});
+
+// Listen to Palpluss iframe postMessage events (RESIZE & PAYMENT_SUCCESS)
+window.addEventListener('message', (e) => {
+    if (!e.data || typeof e.data !== 'object') return;
+    if (e.origin !== PALPLUSS_ORIGIN) return;
+
+    if (e.data.type === 'RESIZE' && typeof e.data.height === 'number') {
+        palplussIframeEl.style.height = Math.max(460, e.data.height) + 'px';
+    }
+
+    if (e.data.type === 'PAYMENT_SUCCESS') {
+        handleConfirmedPalplussPayment({
+            txId: e.data.txId,
+            amount: e.data.amount,
+            phone: e.data.phone
+        });
+    }
+});
+
+// =========================================================================
+// DONATE MODAL LOGIC (TRIGGERS PALPLUSS IFRAME WIDGET)
+// =========================================================================
+document.querySelectorAll('.donate-preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.donate-preset-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        donateAmountInputEl.value = btn.getAttribute('data-amount');
+        donateFeedbackEl.textContent = '';
+    });
+});
+
+btnDonateEl.addEventListener('click', () => {
+    donateFeedbackEl.className = 'error-text';
+    donateFeedbackEl.textContent = '';
+    donateModalEl.classList.remove('hidden');
+});
+
+donateProceedBtnEl.addEventListener('click', () => {
+    const amount = Math.floor(Number(donateAmountInputEl.value));
+    if (!amount || amount < 1) {
+        donateFeedbackEl.className = 'error-text';
+        donateFeedbackEl.textContent = 'Please enter a valid KSH amount (minimum 1 KSH).';
+        return;
+    }
+    donateModalEl.classList.add('hidden');
+    startPalplussPaymentFlow('donate', amount, null);
+});
+
+donateCloseBtnEl.addEventListener('click', () => {
+    donateModalEl.classList.add('hidden');
+});
+
+donateModalEl.addEventListener('click', (e) => {
+    if (e.target === donateModalEl) donateModalEl.classList.add('hidden');
+});
+
+// =========================================================================
+// PIECE SKIN SHOP LOGIC
+// =========================================================================
+function renderSkinShop() {
+    syncCurrentUserFromDB();
+    skinsGridEl.innerHTML = '';
+
+    const user = state.currentUser;
+    if (!user) return;
+
+    SKINS.forEach(skin => {
+        const isOwned = user.ownedSkins.includes(skin.id);
+        const isEquipped = user.equippedSkin === skin.id;
+
+        const card = document.createElement('div');
+        card.className = `skin-card${isEquipped ? ' equipped' : ''}`;
+
+        const preview = document.createElement('div');
+        preview.className = 'skin-preview-box';
+        preview.innerHTML = skin.svg;
+
+        const nameEl = document.createElement('div');
+        nameEl.className = 'skin-name';
+        nameEl.textContent = skin.name;
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'skin-action-btn ';
+
+        if (isEquipped) {
+            btn.className += 'skin-btn-equipped';
+            btn.textContent = '✓ Equipped';
+            btn.disabled = true;
+        } else if (isOwned) {
+            btn.className += 'skin-btn-equip';
+            btn.textContent = 'Equip';
+            btn.addEventListener('click', () => {
+                user.equippedSkin = skin.id;
+                persistCurrentUser();
+                sendNet({ type: 'SKIN', skin: skin.id });
+                renderSkinShop();
+                renderAll();
+            });
+        } else {
+            btn.className += 'skin-btn-unlock';
+            btn.textContent = `${SKIN_PRICE_KSH} KSH`;
+            btn.addEventListener('click', () => {
+                shopModalEl.classList.add('hidden');
+                startPalplussPaymentFlow('skin', SKIN_PRICE_KSH, skin);
+            });
+        }
+
+        card.appendChild(preview);
+        card.appendChild(nameEl);
+        card.appendChild(btn);
+        skinsGridEl.appendChild(card);
+    });
+}
+
+shopBtnEl.addEventListener('click', () => {
+    renderSkinShop();
+    shopModalEl.classList.remove('hidden');
+});
+
+shopCloseXBtnEl.addEventListener('click', () => {
+    shopModalEl.classList.add('hidden');
+});
+
+shopModalEl.addEventListener('click', (e) => {
+    if (e.target === shopModalEl) {
+        shopModalEl.classList.add('hidden');
+    }
+});
+
+// =========================================================================
+// NAVIGATION WITH CONFIRMATION POPUPS
+// =========================================================================
+logoutBtnEl.addEventListener('click', () => {
+    askConfirmation(
+        'Log Out?',
+        'Are you sure you want to log out of your account?',
+        () => logoutUser()
+    );
+});
+
+backBtnEl.addEventListener('click', () => {
+    askConfirmation(
+        'Leave Match?',
+        'Are you sure you want to quit this match and return home?',
+        () => {
+            cleanupNetwork(true, true);
+            showHomeUI();
+        }
+    );
+});
+
+window.addEventListener('beforeunload', () => {
+    if (state.mode === 'online' && state.conn && state.conn.open) {
+        try { state.conn.send({ type: 'LEAVE' }); } catch {}
+    }
+});
+
+// =========================================================================
+// PLAY WITH FRIENDS (GATED BY PAYMENT CHECK)
+// =========================================================================
+function ensureUserHasPaidAccess() {
+    syncCurrentUserFromDB();
+    if (state.currentUser && state.currentUser.hasPaid) {
+        return true;
+    }
+    openInvitesFullscreenModal('Complete your 100 KSH or 150 KSH payment to unlock gameplay!');
+    return false;
+}
+
+function generateRoomCode() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let res = '';
+    for (let i = 0; i < 4; i++) {
+        res += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return res;
+}
+
+function destroyHostedRoom() {
+    if (state.hostPeer) {
+        try { state.hostPeer.destroy(); } catch {}
+        state.hostPeer = null;
+    }
+    state.hostRoomCode = null;
+    state.hostRoomReady = false;
+}
+
+function cleanupNetwork(notifyPeer = false, clearHosted = true) {
+    if (notifyPeer && state.conn && state.conn.open) {
+        try { state.conn.send({ type: 'LEAVE' }); } catch {}
+    }
+    if (state.conn) {
+        try { state.conn.close(); } catch {}
+        state.conn = null;
+    }
+    if (state.peer) {
+        try { state.peer.destroy(); } catch {}
+        state.peer = null;
+    }
+    if (clearHosted) {
+        destroyHostedRoom();
+    }
+    state.roomCode = null;
+    state.opponentSkin = 'circle';
+    state.remoteSelectedNode = null;
+}
+
+function ensurePersistentHostRoom(forceNew = false) {
+    if (!forceNew && state.hostPeer && !state.hostPeer.destroyed && state.hostRoomCode) {
+        hostCodeTextEl.textContent = state.hostRoomCode;
+        mpHostStatusEl.textContent = state.hostRoomReady
+            ? 'Waiting for friend to enter code...'
+            : 'Creating room code...';
+        return;
+    }
+
+    destroyHostedRoom();
+    const code = generateRoomCode();
+    state.hostRoomCode = code;
+    state.hostRoomReady = false;
+    hostCodeTextEl.textContent = code;
+    mpHostStatusEl.textContent = 'Creating room code...';
+
+    const peer = new Peer(PEER_PREFIX + code);
+    state.hostPeer = peer;
+
+    peer.on('open', () => {
+        if (state.hostPeer !== peer) return;
+        state.hostRoomReady = true;
+        hostCodeTextEl.textContent = code;
+        mpHostStatusEl.textContent = 'Waiting for friend to enter code...';
+    });
+
+    peer.on('error', (err) => {
+        if (state.hostPeer !== peer) return;
+        state.hostRoomReady = false;
+        if (err && err.type === 'unavailable-id') {
+            ensurePersistentHostRoom(true);
+            return;
+        }
+        mpHostStatusEl.textContent = 'Network error: ' + (err.type || 'unavailable') + '. Tap New Code.';
+    });
+
+    peer.on('connection', (conn) => {
+        if (state.conn) {
+            conn.close();
+            return;
+        }
+        state.peer = peer;
+        state.conn = conn;
+        state.roomCode = code;
+        state.myPlayerNum = 1;
+        state.hostPeer = null;
+        state.hostRoomCode = null;
+        state.hostRoomReady = false;
+        setupConnectionHandlers(conn, true);
+    });
+}
+
+function setMultiplayerTab(tab) {
+    state.mpTab = tab;
+    if (tab === 'create') {
+        mpToggleTrackEl.classList.remove('join-active');
+        tabCreateRoomEl.classList.add('active');
+        tabJoinRoomEl.classList.remove('active');
+        mpHostViewEl.classList.remove('hidden');
+        mpJoinViewEl.classList.add('hidden');
+        ensurePersistentHostRoom(false);
+    } else {
+        mpToggleTrackEl.classList.add('join-active');
+        tabJoinRoomEl.classList.add('active');
+        tabCreateRoomEl.classList.remove('active');
+        mpHostViewEl.classList.add('hidden');
+        mpJoinViewEl.classList.remove('hidden');
+        setTimeout(() => joinCodeInputEl.focus(), 50);
+    }
+}
+
+tabCreateRoomEl.addEventListener('click', () => {
+    setMultiplayerTab('create');
+});
+
+tabJoinRoomEl.addEventListener('click', () => {
+    setMultiplayerTab('join');
+});
+
+btnPlayFriendsEl.addEventListener('click', () => {
+    if (!ensureUserHasPaidAccess()) return;
+
+    if (state.conn) {
+        try { state.conn.close(); } catch {}
+        state.conn = null;
+    }
+    if (state.peer) {
+        try { state.peer.destroy(); } catch {}
+        state.peer = null;
+    }
+    btnJoinRoomEl.disabled = false;
+    mpJoinStatusEl.textContent = '';
+    setMultiplayerTab(state.mpTab || 'create');
+    mpModalEl.classList.remove('hidden');
+});
+
+btnNewHostCodeEl.addEventListener('click', () => {
+    ensurePersistentHostRoom(true);
+});
+
+joinCodeInputEl.addEventListener('input', () => {
+    joinCodeInputEl.value = joinCodeInputEl.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 4);
+});
+
+joinCodeInputEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        btnJoinRoomEl.click();
+    }
+});
+
+btnCopyHostCodeEl.addEventListener('click', () => {
+    const codeToCopy = state.hostRoomCode || state.roomCode;
+    if (!codeToCopy) return;
+    const temp = document.createElement('input');
+    temp.value = codeToCopy;
+    document.body.appendChild(temp);
+    temp.select();
+    document.execCommand('copy');
+    document.body.removeChild(temp);
+    btnCopyHostCodeEl.textContent = '✓ Copied!';
+    setTimeout(() => {
+        btnCopyHostCodeEl.textContent = 'Copy Code';
+    }, 1500);
+});
+
+mpCloseBtnEl.addEventListener('click', () => {
+    cleanupNetwork(false, true);
+    state.mpTab = 'create';
+    mpModalEl.classList.add('hidden');
+});
+
+btnJoinRoomEl.addEventListener('click', () => {
+    const code = joinCodeInputEl.value.trim().toUpperCase();
+    if (code.length !== 4) {
+        mpJoinStatusEl.textContent = 'Enter a valid 4-character room code.';
+        return;
+    }
+
+    cleanupNetwork(false, true);
+    state.roomCode = code;
+    btnJoinRoomEl.disabled = true;
+    mpJoinStatusEl.textContent = `Connecting to room ${code}...`;
+
+    const peer = new Peer();
+    state.peer = peer;
+
+    peer.on('open', () => {
+        const conn = peer.connect(PEER_PREFIX + code, { reliable: true });
+        state.conn = conn;
+        state.myPlayerNum = 2;
+        setupConnectionHandlers(conn, false);
+    });
+
+    peer.on('error', () => {
+        btnJoinRoomEl.disabled = false;
+        mpJoinStatusEl.textContent = 'Room not found. Check the code.';
+    });
+});
+
+function setupConnectionHandlers(conn, isHost) {
+    conn.on('open', () => {
+        btnJoinRoomEl.disabled = false;
+        mpModalEl.classList.add('hidden');
+
+        startOnlineMatch();
+
+        sendNet({
+            type: 'HELLO',
+            nickname: state.currentUser ? state.currentUser.nickname : 'FRIEND',
+            skin: getEquippedSkin()
+        });
+
+        if (isHost) {
+            sendNet({
+                type: 'SYNC_STATE',
+                board: state.board,
+                pieces: state.pieces,
+                phase: state.phase,
+                turn: state.turn,
+                p1Placed: state.p1Placed,
+                p2Placed: state.p2Placed,
+                startingPlayer: state.startingPlayer,
+                winningLine: state.winningLine,
+                wins: state.wins
+            });
+        }
+    });
+
+    conn.on('data', (data) => {
+        if (!data || !data.type) return;
+
+        if (data.type === 'HELLO') {
+            state.opponentName = data.nickname || 'Friend';
+            state.opponentSkin = data.skin || 'circle';
+            updateScoreLabels();
+            renderAll();
+        } else if (data.type === 'SKIN') {
+            state.opponentSkin = data.skin || 'circle';
+            renderAll();
+        } else if (data.type === 'SYNC_STATE') {
+            clearNextRoundTimers();
+            state.board = [...data.board];
+            state.pieces = data.pieces.map(p => ({ ...p }));
+            state.phase = data.phase;
+            state.turn = data.turn;
+            state.p1Placed = data.p1Placed;
+            state.p2Placed = data.p2Placed;
+            state.startingPlayer = data.startingPlayer;
+            state.winningLine = data.winningLine;
+            state.wins = { ...data.wins };
+            state.selectedNode = null;
+            state.remoteSelectedNode = null;
+            svgWinLayer.innerHTML = '';
+            if (state.winningLine) drawWinningLineSVG(state.winningLine);
+            renderAll();
+        } else if (data.type === 'DROP') {
+            executeDrop(data.idx, data.player, true);
+        } else if (data.type === 'SLIDE') {
+            executeSlide(data.fromIdx, data.toIdx, data.player, true);
+        } else if (data.type === 'SELECT') {
+            state.remoteSelectedNode = data.node;
+            renderAll();
+        } else if (data.type === 'RESET') {
+            resetBoard(true, true, data.startingPlayer);
+        } else if (data.type === 'LEAVE') {
+            if (state.mode === 'online' && homeScreenEl.classList.contains('hidden')) {
+                showOpponentLeftPopup();
+            }
+        }
+    });
+
+    conn.on('close', () => {
+        if (state.mode === 'online' && homeScreenEl.classList.contains('hidden')) {
+            showOpponentLeftPopup();
+        }
+    });
+
+    conn.on('error', () => {
+        if (state.mode === 'online' && homeScreenEl.classList.contains('hidden')) {
+            showOpponentLeftPopup();
+        } else {
+            btnJoinRoomEl.disabled = false;
+            mpJoinStatusEl.textContent = 'Connection interrupted. Check code & retry.';
+        }
+    });
+}
+
+function sendNet(payload) {
+    if (state.mode === 'online' && state.conn && state.conn.open) {
+        state.conn.send(payload);
+    }
+}
+
+function startOnlineMatch() {
+    state.mode = 'online';
+    state.opponentLeftShown = false;
+    state.opponentName = 'Friend';
+    state.opponentSkin = 'circle';
+    state.wins = { 1: 0, 2: 0 };
+    state.startingPlayer = 1;
+    updateScoreLabels();
+    showGameUI();
+    resetBoard(false, true, 1);
+}
+
+// =========================================================================
+// PRACTICE MODE (GATED BY PAYMENT CHECK)
+// =========================================================================
+btnPracticeEl.addEventListener('click', () => {
+    if (!ensureUserHasPaidAccess()) return;
+
+    cleanupNetwork(false, true);
+    state.mode = 'practice';
+    state.myPlayerNum = 1;
+    state.opponentName = 'Bot';
+    state.opponentSkin = 'circle';
+    state.wins = { 1: 0, 2: 0 };
+    state.startingPlayer = 1;
+    updateScoreLabels();
+    showGameUI();
+    resetBoard(false, false, 1);
+});
+
+// =========================================================================
+// BOARD & GAMEPLAY ENGINE
+// =========================================================================
+function initBoardSVG() {
+    svgNodesLayer.innerHTML = '';
+    NODE_COORDS.forEach((pt, idx) => {
+        const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        g.setAttribute('data-node', idx);
+
+        const outer = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        outer.setAttribute('cx', pt.x);
+        outer.setAttribute('cy', pt.y);
+        outer.setAttribute('r', idx === 4 ? '15' : '13');
+        outer.setAttribute('fill', '#220F07');
+        outer.setAttribute('stroke', idx === 4 ? '#F59E0B' : '#B45309');
+        outer.setAttribute('stroke-width', idx === 4 ? '2.5' : '2');
+
+        const inner = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        inner.setAttribute('cx', pt.x);
+        inner.setAttribute('cy', pt.y);
+        inner.setAttribute('r', '4.5');
+        inner.setAttribute('fill', '#78350F');
+
+        const selectedRing = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        selectedRing.setAttribute('cx', pt.x);
+        selectedRing.setAttribute('cy', pt.y);
+        selectedRing.setAttribute('r', '23');
+        selectedRing.setAttribute('fill', 'none');
+        selectedRing.setAttribute('stroke', '#FDE047');
+        selectedRing.setAttribute('stroke-width', '3.5');
+        selectedRing.classList.add('selected-node-ring', 'hidden');
+        selectedRing.id = `selected-ring-${idx}`;
+
+        const validRing = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        validRing.setAttribute('cx', pt.x);
+        validRing.setAttribute('cy', pt.y);
+        validRing.setAttribute('r', '19');
+        validRing.setAttribute('fill', 'url(#nodeGlow)');
+        validRing.setAttribute('stroke', '#34D399');
+        validRing.setAttribute('stroke-width', '2.5');
+        validRing.setAttribute('stroke-dasharray', '5 3');
+        validRing.classList.add('valid-target-ring', 'hidden');
+        validRing.id = `valid-ring-${idx}`;
+
+        g.appendChild(outer);
+        g.appendChild(inner);
+        g.appendChild(selectedRing);
+        g.appendChild(validRing);
+        svgNodesLayer.appendChild(g);
+    });
+}
+
+function clearAITimers() {
+    state.aiTimers.forEach(id => clearTimeout(id));
+    state.aiTimers = [];
+    state.aiThinking = false;
+}
+
+function updateScoreLabels() {
+    const myNick = state.currentUser ? state.currentUser.nickname : 'You';
+    if (state.mode === 'online') {
+        if (state.myPlayerNum === 1) {
+            labelP1El.textContent = `${myNick}:`;
+            labelP2El.textContent = `${state.opponentName}:`;
+        } else {
+            labelP1El.textContent = `${state.opponentName}:`;
+            labelP2El.textContent = `${myNick}:`;
+        }
+    } else {
+        labelP1El.textContent = `${myNick}:`;
+        labelP2El.textContent = 'Bot:';
+    }
+}
+
+function resetBoard(alternateStarter = false, fromRemote = false, syncedStarter = null) {
+    clearAITimers();
+    clearNextRoundTimers();
+    if (typeof syncedStarter === 'number') {
+        state.startingPlayer = syncedStarter;
+    } else if (alternateStarter) {
+        state.startingPlayer = state.startingPlayer === 1 ? 2 : 1;
+    }
+    state.board = Array(9).fill(0);
+    state.pieces = [];
+    state.phase = 'DROP';
+    state.turn = state.startingPlayer;
+    state.p1Placed = 0;
+    state.p2Placed = 0;
+    state.selectedNode = null;
+    state.remoteSelectedNode = null;
+    state.winningLine = null;
+    svgWinLayer.innerHTML = '';
+    renderAll();
+
+    if (state.mode === 'online' && !fromRemote && alternateStarter) {
+        sendNet({ type: 'RESET', startingPlayer: state.startingPlayer });
+    }
+
+    if (state.mode === 'practice' && state.turn === 2) {
+        triggerUnbeatableBotTurn();
+    }
+}
+
+function checkWinner(boardState) {
+    for (const line of WIN_LINES) {
+        const [a, b, c] = line;
+        if (boardState[a] !== 0 && boardState[a] === boardState[b] && boardState[a] === boardState[c]) {
+            return { winner: boardState[a], line };
+        }
+    }
+    return null;
+}
+
+function getValidMovesForPlayer(boardState, player) {
+    const moves = [];
+    for (let i = 0; i < 9; i++) {
+        if (boardState[i] === player) {
+            for (const neighbor of ADJACENCY[i]) {
+                if (boardState[neighbor] === 0) {
+                    moves.push({ from: i, to: neighbor });
+                }
+            }
+        }
+    }
+    return moves;
+}
+
+function getValidDestinations(nodeIdx) {
+    if (state.phase === 'DROP') {
+        return state.board[nodeIdx] === 0 ? [nodeIdx] : [];
+    }
+    if (state.phase === 'MOVE' && nodeIdx !== null) {
+        return ADJACENCY[nodeIdx].filter(neighbor => state.board[neighbor] === 0);
+    }
+    return [];
+}
+
+function canControlCurrentTurn() {
+    if (state.phase === 'GAMEOVER') return false;
+    if (state.mode === 'practice') {
+        return state.turn === 1 && !state.aiThinking;
+    }
+    if (state.mode === 'online') {
+        return state.turn === state.myPlayerNum;
+    }
+    return false;
+}
+
+function handleNodeInteraction(idx) {
+    const now = Date.now();
+    if (now - state.lastInputTime < 85) return;
+    state.lastInputTime = now;
+
+    if (state.phase === 'GAMEOVER') return;
+    if (!canControlCurrentTurn()) return;
+
+    const currentPlayer = state.turn;
+
+    if (state.phase === 'DROP') {
+        if (state.board[idx] !== 0) return;
+        executeDrop(idx, currentPlayer, false);
+        return;
+    }
+
+    if (state.phase === 'MOVE') {
+        const clickedOwner = state.board[idx];
+
+        if (clickedOwner === currentPlayer) {
+            const validDests = getValidDestinations(idx);
+            if (validDests.length > 0) {
+                state.selectedNode = (state.selectedNode === idx) ? null : idx;
+                if (state.mode === 'online') {
+                    sendNet({ type: 'SELECT', node: state.selectedNode });
+                }
+                renderAll();
+            } else {
+                shakePieceAt(idx);
+            }
+            return;
+        }
+
+        if (clickedOwner === 0) {
+            if (state.selectedNode !== null) {
+                const validDests = getValidDestinations(state.selectedNode);
+                if (validDests.includes(idx)) {
+                    executeSlide(state.selectedNode, idx, currentPlayer, false);
+                }
+            } else {
+                const candidateOrigins = [];
+                for (let i = 0; i < 9; i++) {
+                    if (state.board[i] === currentPlayer && ADJACENCY[i].includes(idx)) {
+                        candidateOrigins.push(i);
+                    }
+                }
+                if (candidateOrigins.length === 1) {
+                    executeSlide(candidateOrigins[0], idx, currentPlayer, false);
+                }
+            }
+        }
+    }
+}
+
+function executeDrop(idx, player, fromRemote = false) {
+    if (player !== state.turn || state.board[idx] !== 0) return;
+    if ((player === 1 && state.p1Placed >= PIECES_PER_PLAYER) ||
+        (player === 2 && state.p2Placed >= PIECES_PER_PLAYER)) return;
+
+    if (state.mode === 'online' && !fromRemote) {
+        sendNet({ type: 'DROP', idx, player });
+    }
+
+    state.board[idx] = player;
+    const pieceNum = player === 1 ? ++state.p1Placed : ++state.p2Placed;
+    state.pieces.push({
+        id: `p${player}-${pieceNum}`,
+        player,
+        pos: idx,
+        justSpawned: true
+    });
+
+    state.selectedNode = null;
+    state.remoteSelectedNode = null;
+
+    const winResult = checkWinner(state.board);
+    if (winResult) {
+        finishGame(winResult.winner, winResult.line);
+        return;
+    }
+
+    if (state.p1Placed === PIECES_PER_PLAYER && state.p2Placed === PIECES_PER_PLAYER) {
+        state.phase = 'MOVE';
+    }
+
+    state.turn = player === 1 ? 2 : 1;
+
+    if (state.phase === 'MOVE' && getValidMovesForPlayer(state.board, state.turn).length === 0) {
+        finishGame(0, null);
+        return;
+    }
+
+    renderAll();
+
+    if (state.mode === 'practice' && state.turn === 2) {
+        triggerUnbeatableBotTurn();
+    }
+}
+
+function executeSlide(fromIdx, toIdx, player, fromRemote = false) {
+    if (player !== state.turn) return;
+    if (state.board[fromIdx] !== player || state.board[toIdx] !== 0) return;
+
+    if (state.mode === 'online' && !fromRemote) {
+        sendNet({ type: 'SLIDE', fromIdx, toIdx, player });
+    }
+
+    state.board[fromIdx] = 0;
+    state.board[toIdx] = player;
+
+    const pieceObj = state.pieces.find(p => p.player === player && p.pos === fromIdx);
+    if (pieceObj) {
+        pieceObj.pos = toIdx;
+        pieceObj.justSpawned = false;
+    }
+
+    state.selectedNode = null;
+    state.remoteSelectedNode = null;
+
+    const winResult = checkWinner(state.board);
+    if (winResult) {
+        finishGame(winResult.winner, winResult.line);
+        return;
+    }
+
+    state.turn = player === 1 ? 2 : 1;
+
+    if (getValidMovesForPlayer(state.board, state.turn).length === 0) {
+        finishGame(0, null);
+        return;
+    }
+
+    renderAll();
+
+    if (state.mode === 'practice' && state.turn === 2) {
+        triggerUnbeatableBotTurn();
+    }
+}
+
+function finishGame(winner, winLine) {
+    if (state.phase === 'GAMEOVER') return;
+    clearAITimers();
+    state.phase = 'GAMEOVER';
+    state.selectedNode = null;
+    state.remoteSelectedNode = null;
+    state.winningLine = winLine;
+
+    if (winner === 1 || winner === 2) {
+        state.wins[winner]++;
+    }
+
+    if (winLine) drawWinningLineSVG(winLine);
+    renderAll();
+    scheduleRoundEndPopup(winner);
+}
+
+// =========================================================================
+// UNBEATABLE BOT ENGINE
+// =========================================================================
+function triggerUnbeatableBotTurn() {
+    if (state.mode !== 'practice' || state.turn !== 2 || state.phase === 'GAMEOVER') return;
+    clearAITimers();
+    state.aiThinking = true;
+    renderAll();
+
+    if (state.phase === 'DROP') {
+        const t1 = setTimeout(() => {
+            if (state.mode !== 'practice' || state.phase !== 'DROP' || state.turn !== 2) return;
+            const dropIdx = chooseUnbeatableDrop();
+            state.aiThinking = false;
+            if (dropIdx !== null) executeDrop(dropIdx, 2, false);
+        }, 320);
+        state.aiTimers.push(t1);
+    } else if (state.phase === 'MOVE') {
+        const t1 = setTimeout(() => {
+            if (state.mode !== 'practice' || state.phase !== 'MOVE' || state.turn !== 2) return;
+            const bestMove = chooseUnbeatableMove();
+            if (!bestMove) {
+                state.aiThinking = false;
+                finishGame(0, null);
+                return;
+            }
+            state.remoteSelectedNode = bestMove.from;
+            renderAll();
+
+            const t2 = setTimeout(() => {
+                if (state.mode !== 'practice' || state.phase !== 'MOVE' || state.turn !== 2) return;
+                state.aiThinking = false;
+                executeSlide(bestMove.from, bestMove.to, 2, false);
+            }, 340);
+            state.aiTimers.push(t2);
+        }, 260);
+        state.aiTimers.push(t1);
+    }
+}
+
+function evaluatePosition(boardState, depth) {
+    const winRes = checkWinner(boardState);
+    if (winRes) {
+        return winRes.winner === 2 ? (100000 + depth * 200) : (-100000 - depth * 200);
+    }
+
+    let score = 0;
+    if (boardState[4] === 2) score += 45;
+    else if (boardState[4] === 1) score -= 45;
+
+    for (const [a, b, c] of WIN_LINES) {
+        const vals = [boardState[a], boardState[b], boardState[c]];
+        const p2 = vals.filter(v => v === 2).length;
+        const p1 = vals.filter(v => v === 1).length;
+        const empty = vals.filter(v => v === 0).length;
+
+        if (p2 === 2 && empty === 1) score += 32;
+        if (p1 === 2 && empty === 1) score -= 35;
+    }
+
+    const p2Mob = getValidMovesForPlayer(boardState, 2).length;
+    const p1Mob = getValidMovesForPlayer(boardState, 1).length;
+    score += (p2Mob - p1Mob) * 6;
+
+    return score;
+}
+
+function searchAlphaBeta(boardState, depth, alpha, beta, isMaximizing, p1Count, p2Count) {
+    const winRes = checkWinner(boardState);
+    if (winRes) {
+        return winRes.winner === 2 ? (100000 + depth * 200) : (-100000 - depth * 200);
+    }
+
+    const isDropPhase = (p1Count < PIECES_PER_PLAYER || p2Count < PIECES_PER_PLAYER);
+    if (!isDropPhase) {
+        const activePlayer = isMaximizing ? 2 : 1;
+        if (getValidMovesForPlayer(boardState, activePlayer).length === 0) {
+            return 0;
+        }
+    }
+
+    if (depth === 0) {
+        return evaluatePosition(boardState, depth);
+    }
+
+    const key = `${boardState.join('')}|${depth}|${isMaximizing ? 1 : 0}|${p1Count}|${p2Count}`;
+    if (tt.has(key)) return tt.get(key);
+
+    let bestVal;
+    if (isMaximizing) {
+        bestVal = -Infinity;
+        if (isDropPhase) {
+            for (let i = 0; i < 9; i++) {
+                if (boardState[i] === 0) {
+                    boardState[i] = 2;
+                    const val = searchAlphaBeta(boardState, depth - 1, alpha, beta, false, p1Count, p2Count + 1);
+                    boardState[i] = 0;
+                    if (val > bestVal) bestVal = val;
+                    if (bestVal > alpha) alpha = bestVal;
+                    if (beta <= alpha) break;
+                }
+            }
+        } else {
+            const moves = getValidMovesForPlayer(boardState, 2);
+            for (const m of moves) {
+                boardState[m.from] = 0;
+                boardState[m.to] = 2;
+                const val = searchAlphaBeta(boardState, depth - 1, alpha, beta, false, PIECES_PER_PLAYER, PIECES_PER_PLAYER);
+                boardState[m.to] = 0;
+                boardState[m.from] = 2;
+                if (val > bestVal) bestVal = val;
+                if (bestVal > alpha) alpha = bestVal;
+                if (beta <= alpha) break;
+            }
+        }
+    } else {
+        bestVal = Infinity;
+        if (isDropPhase) {
+            for (let i = 0; i < 9; i++) {
+                if (boardState[i] === 0) {
+                    boardState[i] = 1;
+                    const val = searchAlphaBeta(boardState, depth - 1, alpha, beta, true, p1Count + 1, p2Count);
+                    boardState[i] = 0;
+                    if (val < bestVal) bestVal = val;
+                    if (bestVal < beta) beta = bestVal;
+                    if (beta <= alpha) break;
+                }
+            }
+        } else {
+            const moves = getValidMovesForPlayer(boardState, 1);
+            for (const m of moves) {
+                boardState[m.from] = 0;
+                boardState[m.to] = 1;
+                const val = searchAlphaBeta(boardState, depth - 1, alpha, beta, true, PIECES_PER_PLAYER, PIECES_PER_PLAYER);
+                boardState[m.to] = 0;
+                boardState[m.from] = 1;
+                if (val < bestVal) bestVal = val;
+                if (bestVal < beta) beta = bestVal;
+                if (beta <= alpha) break;
+            }
+        }
+    }
+
+    if (tt.size < 120000) tt.set(key, bestVal);
+    return bestVal;
+}
+
+function chooseUnbeatableDrop() {
+    const emptyNodes = [];
+    for (let i = 0; i < 9; i++) {
+        if (state.board[i] === 0) emptyNodes.push(i);
+    }
+    if (emptyNodes.length === 0) return null;
+
+    for (const idx of emptyNodes) {
+        const copy = [...state.board];
+        copy[idx] = 2;
+        if (checkWinner(copy)) return idx;
+    }
+
+    for (const idx of emptyNodes) {
+        const copy = [...state.board];
+        copy[idx] = 1;
+        if (checkWinner(copy)) return idx;
+    }
+
+    emptyNodes.sort((a, b) => (b === 4 ? 1 : 0) - (a === 4 ? 1 : 0));
+
+    let bestScore = -Infinity;
+    let bestIdx = emptyNodes[0];
+
+    for (const idx of emptyNodes) {
+        const copy = [...state.board];
+        copy[idx] = 2;
+        const score = searchAlphaBeta(copy, 9, -Infinity, Infinity, false, state.p1Placed, state.p2Placed + 1);
+        if (score > bestScore) {
+            bestScore = score;
+            bestIdx = idx;
+        }
+    }
+    return bestIdx;
+}
+
+function chooseUnbeatableMove() {
+    const moves = getValidMovesForPlayer(state.board, 2);
+    if (moves.length === 0) return null;
+
+    for (const m of moves) {
+        const copy = [...state.board];
+        copy[m.from] = 0;
+        copy[m.to] = 2;
+        if (checkWinner(copy)) return m;
+    }
+
+    moves.sort((a, b) => (b.to === 4 ? 1 : 0) - (a.to === 4 ? 1 : 0));
+
+    let bestScore = -Infinity;
+    let bestMove = moves[0];
+
+    for (const m of moves) {
+        const copy = [...state.board];
+        copy[m.from] = 0;
+        copy[m.to] = 2;
+        const score = searchAlphaBeta(copy, 11, -Infinity, Infinity, false, PIECES_PER_PLAYER, PIECES_PER_PLAYER);
+        if (score > bestScore) {
+            bestScore = score;
+            bestMove = m;
+        }
+    }
+    return bestMove;
+}
+
+// =========================================================================
+// RENDERING (WITH EQUIPPED & ENEMY SKINS)
+// =========================================================================
+function getActiveSelectedNode() {
+    if (state.phase !== 'MOVE') return null;
+    if (state.mode === 'practice') {
+        return state.turn === 1 ? state.selectedNode : state.remoteSelectedNode;
+    }
+    return state.turn === state.myPlayerNum ? state.selectedNode : state.remoteSelectedNode;
+}
+
+function renderAll() {
+    renderBoardPiecesAndHotspots();
+    renderValidIndicators();
+    renderWinsAndTurn();
+}
+
+function renderWinsAndTurn() {
+    winsP1El.textContent = state.wins[1];
+    winsP2El.textContent = state.wins[2];
+    boxP1El.classList.toggle('active-turn', state.turn === 1 && state.phase !== 'GAMEOVER');
+    boxP2El.classList.toggle('active-turn', state.turn === 2 && state.phase !== 'GAMEOVER');
+}
+
+function renderBoardPiecesAndHotspots() {
+    for (let i = 0; i < 9; i++) {
+        let spot = document.getElementById(`hotspot-${i}`);
+        if (!spot) {
+            spot = document.createElement('div');
+            spot.id = `hotspot-${i}`;
+            spot.className = 'node-hotspot';
+            const pt = NODE_COORDS[i];
+            spot.style.left = `${(pt.x / 300) * 100}%`;
+            spot.style.top = `${(pt.y / 300) * 100}%`;
+            spot.addEventListener('pointerdown', (e) => {
+                e.preventDefault();
+                handleNodeInteraction(i);
+            });
+            boardPiecesLayer.appendChild(spot);
+        }
+    }
+
+    const existingEls = boardPiecesLayer.querySelectorAll('.game-piece');
+    const activeIds = new Set(state.pieces.map(p => p.id));
+    existingEls.forEach(el => {
+        if (!activeIds.has(el.id)) el.remove();
+    });
+
+    const activeSelectedNode = getActiveSelectedNode();
+
+    state.pieces.forEach(piece => {
+        let el = document.getElementById(piece.id);
+        const pt = NODE_COORDS[piece.pos];
+        const leftPct = `${(pt.x / 300) * 100}%`;
+        const topPct = `${(pt.y / 300) * 100}%`;
+        const skinMarkup = getSkinSVG(getSkinForPlayer(piece.player));
+
+        if (!el) {
+            el = document.createElement('div');
+            el.id = piece.id;
+            el.className = `game-piece ${piece.player === 1 ? 'piece-p1' : 'piece-p2'} spawn-pop`;
+            el.style.left = leftPct;
+            el.style.top = topPct;
+            el.innerHTML = skinMarkup;
+            boardPiecesLayer.appendChild(el);
+        } else {
+            el.classList.remove('spawn-pop', 'piece-p1', 'piece-p2');
+            el.classList.add(piece.player === 1 ? 'piece-p1' : 'piece-p2');
+            el.style.left = leftPct;
+            el.style.top = topPct;
+            if (el.innerHTML !== skinMarkup) {
+                el.innerHTML = skinMarkup;
+            }
+        }
+
+        const isSelected = activeSelectedNode === piece.pos && piece.player === state.turn && state.phase === 'MOVE';
+        el.classList.toggle('selected', isSelected);
+
+        const isWinnerPiece = state.winningLine && state.winningLine.includes(piece.pos);
+        el.classList.toggle('winner-piece', Boolean(isWinnerPiece));
+
+        const canMove = state.phase === 'MOVE' &&
+                        piece.player === state.turn &&
+                        getValidDestinations(piece.pos).length > 0;
+        el.classList.toggle('can-move', canMove);
+    });
+}
+
+function renderValidIndicators() {
+    const validSet = new Set();
+    const canAct = canControlCurrentTurn();
+    const activeSelectedNode = getActiveSelectedNode();
+
+    if (state.phase === 'DROP' && canAct) {
+        state.board.forEach((val, idx) => {
+            if (val === 0) validSet.add(idx);
+        });
+    } else if (state.phase === 'MOVE' && canAct) {
+        if (state.selectedNode !== null) {
+            getValidDestinations(state.selectedNode).forEach(idx => validSet.add(idx));
+        } else {
+            getValidMovesForPlayer(state.board, state.turn).forEach(m => validSet.add(m.to));
+        }
+    }
+
+    for (let i = 0; i < 9; i++) {
+        const ring = document.getElementById(`valid-ring-${i}`);
+        if (ring) ring.classList.toggle('hidden', !validSet.has(i));
+
+        const selRing = document.getElementById(`selected-ring-${i}`);
+        if (selRing) selRing.classList.toggle('hidden', activeSelectedNode !== i);
+    }
+}
+
+function drawWinningLineSVG(line) {
+    if (!line) return;
+    svgWinLayer.innerHTML = '';
+    const pStart = NODE_COORDS[line[0]];
+    const pEnd = NODE_COORDS[line[2]];
+
+    const svgLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    svgLine.setAttribute('x1', pStart.x);
+    svgLine.setAttribute('y1', pStart.y);
+    svgLine.setAttribute('x2', pEnd.x);
+    svgLine.setAttribute('y2', pEnd.y);
+    svgLine.classList.add('win-line');
+    svgWinLayer.appendChild(svgLine);
+}
+
+function shakePieceAt(pos) {
+    const piece = state.pieces.find(p => p.pos === pos);
+    if (!piece) return;
+    const el = document.getElementById(piece.id);
+    if (!el) return;
+    el.style.transform = 'translate(-56%, -50%) scale(1.04)';
+    setTimeout(() => { el.style.transform = 'translate(-44%, -50%) scale(1.04)'; }, 60);
+    setTimeout(() => { el.style.transform = ''; }, 130);
+}
+
+// =========================================================================
+// BOOTSTRAP SESSION
+// =========================================================================
+initBoardSVG();
+resetBoard(false, false, 1);
+
+(function restoreSession() {
+    const savedNick = localStorage.getItem('mawe_tatu_session');
+    if (savedNick) {
+        const db = getUsersDB();
+        if (db[savedNick]) {
+            loginSuccess(savedNick, db[savedNick]);
+            return;
+        }
+    }
+})();
+</script>
+</body>
+</html>
